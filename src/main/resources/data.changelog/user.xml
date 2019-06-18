@@ -1,0 +1,51 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="nnigmat">
+        <createTable tableName="usr">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="username" type="varchar(128)">
+                <constraints nullable="false" unique="true"></constraints>
+            </column>
+            <column name="password" type="varchar(128)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="active" type="bool" defaultValue="true"></column>
+            <column name="email" type="varchar(128)"></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="nnigmat">
+        <insert tableName="usr">
+            <column name="id" value="1"></column>
+            <column name="username" value="sasha"></column>
+            <column name="email" value="sasha@mail.ru"></column>
+            <column name="password" value="sasha"></column>
+        </insert>
+        <insert tableName="usr">
+            <column name="id" value="2"></column>
+            <column name="username" value="nikita"></column>
+            <column name="email" value="nikita@mail.ru"></column>
+            <column name="password" value="nikita"></column>
+        </insert>
+        <insert tableName="usr">
+            <column name="id" value="3"></column>
+            <column name="username" value="karen"></column>
+            <column name="email" value="karen@mail.ru"></column>
+            <column name="password" value="karen"></column>
+        </insert>
+        <insert tableName="usr">
+            <column name="id" value="4"></column>
+            <column name="username" value="admin"></column>
+            <column name="email" value="admin@mail.ru"></column>
+            <column name="password" value="admin"></column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
