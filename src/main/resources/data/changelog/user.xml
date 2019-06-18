@@ -48,4 +48,32 @@
         </insert>
     </changeSet>
 
+    <changeSet id="3" author="nnigmat">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_user_account" references="usr(id)"></constraints>
+            </column>
+            <column name="roles" type="varchar(255)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+
+        <insert tableName="user_roles">
+            <column name="roles" value="MODERATOR"></column>
+            <column name="user_id" value="1"></column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="roles" value="USER"></column>
+            <column name="user_id" value="2"></column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="roles" value="CURATOR"></column>
+            <column name="user_id" value="3"></column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="roles" value="ADMIN"></column>
+            <column name="user_id" value="4"></column>
+        </insert>
+    </changeSet>
+
 </databaseChangeLog>
