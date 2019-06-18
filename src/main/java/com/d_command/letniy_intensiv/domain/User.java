@@ -23,10 +23,10 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-
-    @OneToMany
-    @JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<String> tags;
+//
+//    @OneToMany
+//    @JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    private Set<String> tags;
 
     public User() {}
 
@@ -102,12 +102,12 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-    public Set<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(Set<String> tags) {
-        this.tags = tags;
-    }
+//
+//    public Set<String> getTags() {
+//        return tags;
+//    }
+//
+//    public void setTags(Set<String> tags) {
+//        this.tags = tags;
+//    }
 }
