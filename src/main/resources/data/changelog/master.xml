@@ -9,4 +9,6 @@
     <include file="data/changelog/project.xml"></include>
     <include file="data/changelog/intensive.xml"></include>
     <include file="data/changelog/user_likes.xml"></include>
+    <include file="data/changelog/project_tags.xml"></include>
+    <include file="data/changelog/user_tags.xml"></include>
 </databaseChangeLog>
