@@ -16,11 +16,30 @@
             <column name="description" type="varchar(1024)">
                 <constraints nullable="false"></constraints>
             </column>
+            <column name="intensive_id" type="bigint">
+                <constraints  foreignKeyName="fk_intensive_account"  references="intensive(id)"></constraints>
+            </column>
             <column name="creator_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_creator_account" references="usr(id)"></constraints>
             </column>
-            <column name="users" type="varchar(1024)"></column>
         </createTable>
+    </changeSet>
+    
+    <changeSet id="2" author="nnigmat">
+        <insert tableName="project">
+            <column name="id" value="1"></column>
+            <column name="name" value="Summer internship"></column>
+            <column name="description" value="Create summer internship site"></column>
+            <column name="intensive_id" value="1"></column>
+            <column name="creator_id" value="1"></column>
+        </insert>
+        <insert tableName="project">
+            <column name="id" value="2"></column>
+            <column name="name" value="Make online game"></column>
+            <column name="description" value="Make MMORPG"></column>
+            <column name="intensive_id" value="2"></column>
+            <column name="creator_id" value="2"></column>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>
