@@ -8,4 +8,5 @@
     <include file="data/changelog/user.xml"></include>
     <include file="data/changelog/project.xml"></include>
     <include file="data/changelog/intensive.xml"></include>
+    <include file="data/changelog/user_likes.xml"></include>
 </databaseChangeLog>
