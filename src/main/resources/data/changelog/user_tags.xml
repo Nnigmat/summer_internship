@@ -10,12 +10,12 @@
             <column name="user_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_user_account" references="usr(id)"></constraints>
             </column>
-            <column name="tag" type="varchar(128)">
-                <constraints nullable="false"></constraints>
+            <column name="tag_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_tag_account" references="tag(id)"></constraints>
             </column>
         </createTable>
 
-        <addPrimaryKey tableName="user_tags" columnNames="user_id, tag"></addPrimaryKey>
+        <addPrimaryKey tableName="user_tags" columnNames="user_id, tag_id"></addPrimaryKey>
     </changeSet>
 
 </databaseChangeLog>

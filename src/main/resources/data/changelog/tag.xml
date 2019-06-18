@@ -6,15 +6,13 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="1" author="nnigmat">
-        <createTable tableName="project_tags">
-            <column name="project_id"  type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_project_account" references="project(id)"></constraints>
+        <createTable tableName="tag">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
             </column>
-            <column name="tag_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_tag_account" references="tag(id)"></constraints>
+            <column name="text" type="varchar(128)">
+                <constraints nullable="false"></constraints>
             </column>
         </createTable>
-        <addPrimaryKey tableName="project_tags" columnNames="project_id, tag_id"></addPrimaryKey>
     </changeSet>
-
 </databaseChangeLog>
