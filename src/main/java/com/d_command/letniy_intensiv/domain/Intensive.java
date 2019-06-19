@@ -19,7 +19,7 @@ public class Intensive {
     @JoinColumn(name = "curator_id")
     private User curator;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "intensive_project",
             joinColumns = @JoinColumn(name = "intensive_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"))

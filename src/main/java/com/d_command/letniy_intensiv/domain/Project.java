@@ -19,13 +19,13 @@ public class Project {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "project_user",
             joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     private Set<User> team;
 
-    @ManyToMany(mappedBy = "project_list", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "project_list", fetch = FetchType.EAGER)
     private Set<Intensive> intensive_list;
 
     public Project() {}

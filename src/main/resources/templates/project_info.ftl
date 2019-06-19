@@ -1,6 +1,6 @@
 <#import "fragments/page.ftl" as p>
 
-<@p.page "Intensives list">
+<@p.page "${project.name}">
     <!-- Description of intensive -->
     <h5>${project.name}</h5>
     <p>${project.description}</p>

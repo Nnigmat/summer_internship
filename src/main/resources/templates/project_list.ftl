@@ -1,6 +1,6 @@
 <#import "fragments/page.ftl" as p>
 
-<@p.page "Intensives list">
+<@p.page "Projects list">
     <!-- Create project -->
     <@p.collapse "New project" "project">
         <form method="post" action="/project">

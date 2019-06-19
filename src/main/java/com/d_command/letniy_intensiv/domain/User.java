@@ -18,7 +18,7 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
 
-    @ManyToMany(mappedBy = "team", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "team", fetch = FetchType.EAGER)
     private Set<Project> project_list;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -115,6 +115,19 @@ public class User implements UserDetails {
 
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
+    }
+
+    public boolean isBanned() {
+        return roles.contains(Role.BAN);
+    }
+
+    public void update(String username, String password) {
+        if (username != "") {
+            this.username = username;
+        }
+        if (password != "") {
+            this.password = password;
+        }
     }
 //
 //    public Set<String> getTags() {

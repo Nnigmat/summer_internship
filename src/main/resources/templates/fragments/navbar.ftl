@@ -18,7 +18,18 @@
             <li class="nav-item">
                 <a class="nav-link text-dark" href="/project">Projects</a>
             </li>
+            <!-- Users list -->
+            <#if isAdmin>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="/user">Users</a>
+                </li>
+            </#if>
         </ul>
+
+        <!-- Profile -->
+        <div class="navbar-text mr-3 text-dark">
+            <a href="/profile">Profile</a>
+        </div>
 
         <!-- Logout -->
         <form action="/logout" method="post">
