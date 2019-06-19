@@ -19,7 +19,7 @@
     <div class="row">
         <#list intensives as intensive>
             <div class="col-4">
-                <div class="card my-2" style="width: 18rem;">
+                <div class="card my-2">
                     <div class="card-body">
                         <h5 class="card-title">${intensive.name}</h5>
                         <p class="card-text">

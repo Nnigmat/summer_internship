@@ -28,7 +28,7 @@
 
         <!-- Profile -->
         <div class="navbar-text mr-3 text-dark">
-            <a href="/profile">Profile</a>
+            <a href="/profile">${name}</a>
         </div>
 
         <!-- Logout -->

@@ -1,6 +1,7 @@
 package com.d_command.letniy_intensiv.controllers;
 
 import com.d_command.letniy_intensiv.domain.Intensive;
+import com.d_command.letniy_intensiv.domain.Project;
 import com.d_command.letniy_intensiv.domain.User;
 import com.d_command.letniy_intensiv.repos.IntensiveRepo;
 import com.d_command.letniy_intensiv.repos.ProjectRepo;
@@ -9,6 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/intensive")

@@ -21,9 +21,7 @@
                         <p class="card-text">
                             ${project.description}
                         </p>
-                        <#if user_now.isModerator() || user_now.isCurator() || user_now.id == project.creator.id>
-                            <a href="/project/${project.id}">Edit >></a>
-                        </#if>
+                        <a href="/project/${project.id}">Info >></a>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Date: ${project.date_created}</li>
                             <li class="list-group-item">

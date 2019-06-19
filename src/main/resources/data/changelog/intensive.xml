@@ -17,7 +17,7 @@
                 <constraints nullable="false"></constraints>
             </column>
             <column name="curator_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_curator_account" references="usr(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_intensive_curator" references="usr(id)"></constraints>
             </column>
             <column name="date_start" type="varchar(64)">
                 <constraints nullable="false"></constraints>

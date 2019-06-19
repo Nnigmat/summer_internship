@@ -20,7 +20,10 @@
                 <constraints nullable="false"></constraints>
             </column>
             <column name="creator_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_creator_account" references="usr(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_project_creator" references="usr(id)"></constraints>
+            </column>
+            <column name="supervisor_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_project_supervisor" references="usr(id)"></constraints>
             </column>
         </createTable>
     </changeSet>

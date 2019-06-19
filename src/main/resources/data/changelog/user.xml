@@ -46,7 +46,7 @@
     <changeSet id="3" author="nnigmat">
         <createTable tableName="user_roles">
             <column name="user_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_user_account" references="usr(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_user_role" references="usr(id)"></constraints>
             </column>
             <column name="roles" type="varchar(255)">
                 <constraints nullable="false"></constraints>

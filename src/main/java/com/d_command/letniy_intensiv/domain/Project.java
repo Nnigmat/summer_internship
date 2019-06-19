@@ -28,6 +28,10 @@ public class Project {
     @ManyToMany(mappedBy = "project_list", fetch = FetchType.EAGER)
     private Set<Intensive> intensive_list;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "supervisor_id")
+    private User supervisor;
+
     public Project() {}
 
     public Project(String name, String description, User user) {
@@ -105,16 +109,26 @@ public class Project {
         this.team = team;
     }
 
-    public Project update(String name, String description) {
-        if (this.name != name) {
+    public User getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(User supervisor) {
+        this.supervisor = supervisor;
+    }
+
+    public void update(String name, String description) {
+        if (name != "") {
             this.name = name;
         }
 
-        if (this.description != description) {
+        if (description != "") {
             this.description = description;
         }
+    }
 
-        return this;
+    public void update(User user) {
+        this.supervisor = user;
     }
 
     public void addUser(User user) {

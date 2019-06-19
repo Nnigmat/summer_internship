@@ -34,7 +34,7 @@
                         <p class="card-text">
                             ${project.description}
                         </p>
-                        <a href="/project/${project.id}">Edit >></a>
+                        <a href="/project/${project.id}">Info >></a>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Date: ${project.date_created}</li>
                         </ul>
