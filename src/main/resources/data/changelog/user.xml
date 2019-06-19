@@ -17,33 +17,28 @@
                 <constraints nullable="false"></constraints>
             </column>
             <column name="active" type="bool" defaultValue="true"></column>
-            <column name="email" type="varchar(128)"></column>
         </createTable>
     </changeSet>
 
     <changeSet id="2" author="nnigmat">
         <insert tableName="usr">
-            <column name="id" value="1"></column>
+            <column name="id" value="-3"></column>
             <column name="username" value="sasha"></column>
-            <column name="email" value="sasha@mail.ru"></column>
             <column name="password" value="sasha"></column>
         </insert>
         <insert tableName="usr">
-            <column name="id" value="2"></column>
+            <column name="id" value="-2"></column>
             <column name="username" value="nikita"></column>
-            <column name="email" value="nikita@mail.ru"></column>
             <column name="password" value="nikita"></column>
         </insert>
         <insert tableName="usr">
-            <column name="id" value="3"></column>
+            <column name="id" value="-1"></column>
             <column name="username" value="karen"></column>
-            <column name="email" value="karen@mail.ru"></column>
             <column name="password" value="karen"></column>
         </insert>
         <insert tableName="usr">
-            <column name="id" value="4"></column>
+            <column name="id" value="0"></column>
             <column name="username" value="admin"></column>
-            <column name="email" value="admin@mail.ru"></column>
             <column name="password" value="admin"></column>
         </insert>
     </changeSet>
@@ -60,19 +55,19 @@
 
         <insert tableName="user_roles">
             <column name="roles" value="MODERATOR"></column>
-            <column name="user_id" value="1"></column>
+            <column name="user_id" value="-3"></column>
         </insert>
         <insert tableName="user_roles">
             <column name="roles" value="USER"></column>
-            <column name="user_id" value="2"></column>
+            <column name="user_id" value="-2"></column>
         </insert>
         <insert tableName="user_roles">
             <column name="roles" value="CURATOR"></column>
-            <column name="user_id" value="3"></column>
+            <column name="user_id" value="-1"></column>
         </insert>
         <insert tableName="user_roles">
             <column name="roles" value="ADMIN"></column>
-            <column name="user_id" value="4"></column>
+            <column name="user_id" value="0"></column>
         </insert>
     </changeSet>
 

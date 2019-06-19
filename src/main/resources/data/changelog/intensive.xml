@@ -19,21 +19,32 @@
             <column name="curator_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_curator_account" references="usr(id)"></constraints>
             </column>
+            <column name="date_start" type="varchar(64)">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="date_end" type="varchar(64)">
+                <constraints nullable="false"></constraints>
+            </column>
+
         </createTable>
     </changeSet>
     
     <changeSet id="2" author="nnigmat">
         <insert tableName="intensive">
-            <column name="id" value="1"></column>
+            <column name="id" value="-1"></column>
             <column name="name" value="Summer intensive 2019"></column>
             <column name="description" value="Summer intensive 2019. Kazan"></column>
-            <column name="curator_id" value="3"></column>
+            <column name="curator_id" value="-1"></column>
+            <column name="date_start" value="6/17/2019"></column>
+            <column name="date_end" value="6/30/2019"></column>
         </insert>
         <insert tableName="intensive">
-            <column name="id" value="2"></column>
+            <column name="id" value="0"></column>
             <column name="name" value="Summer intensive 2019"></column>
             <column name="description" value="Summer intensive 2019. Ulyanovsk"></column>
-            <column name="curator_id" value="3"></column>
+            <column name="curator_id" value="-1"></column>
+            <column name="date_start" value="7/1/2019"></column>
+            <column name="date_end" value="7/14/2019"></column>
         </insert>
     </changeSet>
 
