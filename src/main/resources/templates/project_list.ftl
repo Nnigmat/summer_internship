@@ -1,6 +1,9 @@
 <#import "fragments/page.ftl" as p>
 
 <@p.page "Projects list">
+    <h1>Projects</h1>
+    <hr>
+
     <!-- Project types -->
     <div class="btn-group btn-group-lg" role="group" aria-label="Button group for project by type searching" style="margin-bottom: 10px;">
         <a href="/project"> <button type="button" class="btn btn-light"> All </button> </a>
@@ -45,7 +48,7 @@
     <div class="row">
         <#list projects as project>
             <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card my-2" style="width: 18rem;">
+                <div class="card my-2 shadow" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">${project.name}</h5>
                         <p class="card-text">

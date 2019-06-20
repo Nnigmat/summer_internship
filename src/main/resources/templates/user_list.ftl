@@ -1,6 +1,8 @@
 <#import "fragments/page.ftl" as p>
 
 <@p.page "Users List">
+    <h1>Users</h1>
+    <hr>
     <!-- User search -->
     <form method="post" action="/user">
         <div class="row my-4">

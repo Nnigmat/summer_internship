@@ -2,10 +2,28 @@
 
 <@p.page "${project.name}">
     <!-- Description of intensive -->
-    <h3>${project.name}</h3>
-    <p>${project.description}</p>
-    <p>Created: ${project.date_created}</p>
-    <p>Creator: ${project.creator.username}</p>
+    <div class="row">
+        <h1>${project.name}</h1>
+        <div class="col-lg-9">
+            <p>${project.description}</p>
+            <!-- Team -->
+            Team members:
+            <#list project.team as user>
+                <div>
+                    ${user.username}
+                </div>
+            <#else>
+            <h5>No participants yet</h5>
+            </#list>
+        </div>
+        <div class="col-lg-3">
+            <i>Created:</i> ${project.date_created}<br>
+            <i>Curator:</i> ${project.creator.username}
+        </div>
+
+
+    </div>
+    <hr>
 
     <!-- Change description -->
     <#if user_now.isModerator() || user_now.id == project.creator.id>
@@ -35,15 +53,6 @@
         </@p.collapse>
     </#if>
 
-    <!-- Team -->
-    <h3>Team members: </h3>
-    <#list project.team as user>
-        <div>
-            ${user.username}
-        </div>
-    <#else>
-        <h5>No participants yet</h5>
-    </#list>
 
     <!-- Add supervisor -->
     <#if user_now.isCurator() && !project.supervisor??>

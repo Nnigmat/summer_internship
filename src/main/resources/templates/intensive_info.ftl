@@ -2,11 +2,16 @@
 
 <@p.page "${intensive.name}">
     <!-- Description of intensive -->
-    <h5>${intensive.name}</h5>
-    <p>${intensive.description}</p>
-    <p>Start: ${intensive.date_start}</p>
-    <p>End: ${intensive.date_end}</p>
-    <p>Curator: ${intensive.curator.username}</p>
+    <div class="row">
+        <h1>${intensive.name}</h1>
+        <div class="col-lg-9">
+            <p>${intensive.description}</p>
+        </div>
+        <div class="col-lg-3">
+            <i>Dates:</i> ${intensive.date_start} - ${intensive.date_end} <br>
+            <i>Curator:</i> ${intensive.curator.username}
+        </div>
+    </div>
 
     <!-- Add project -->
     <#if user_now.isCurator()>
@@ -24,6 +29,7 @@
         </@p.collapse>
     </#if>
 
+    <hr>
     <!-- List of projects -->
     <div class="row">
         <#list projects as project>

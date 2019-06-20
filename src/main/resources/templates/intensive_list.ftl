@@ -1,6 +1,8 @@
 <#import "fragments/page.ftl" as p>
 
 <@p.page "Intensives list">
+    <h1>Our intensives</h1>
+    <hr>
     <!-- New intensive -->
     <#if user_now.isCurator()>
         <a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newIntensiveModal"> New intensive </button></a>
@@ -48,7 +50,7 @@
     <div class="row">
         <#list intensives as intensive>
             <div class="col-4">
-                <div class="card my-2">
+                <div class="card my-2 shadow">
                     <div class="card-body">
                         <h5 class="card-title">${intensive.name}</h5>
                         <p class="card-text">

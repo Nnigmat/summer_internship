@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-info mb-3">
     <!-- Main page -->
-    <a class="navbar-brand text-dark" href="/" style="font-weight: bold">Home</a>
+    <a class="navbar-brand text-white" href="/" style="font-weight: bold">Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,23 +12,23 @@
         <ul class="navbar-nav mr-auto">
             <!-- Intensives list -->
             <li class="nav-item">
-                <a class="nav-link text-dark" href="/intensive">Intensives</a>
+                <a class="nav-link text-white" href="/intensive">Intensives</a>
             </li>
             <!-- Projects list -->
             <li class="nav-item">
-                <a class="nav-link text-dark" href="/project">Projects</a>
+                <a class="nav-link text-white" href="/project">Projects</a>
             </li>
             <!-- Users list -->
             <#if isAdmin>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="/user">Users</a>
+                    <a class="nav-link text-white" href="/user">Users</a>
                 </li>
             </#if>
         </ul>
 
         <!-- Profile -->
-        <div class="navbar-text mr-3 text-dark">
-            <a href="/profile">${name}</a>
+        <div class="navbar-text mr-3">
+            <a href="/profile"><i class="text-white">${name}</i></a>
         </div>
 
         <!-- Logout -->
