@@ -2,11 +2,12 @@
 
 <@p.page "Projects list">
     <!-- Project types -->
-    <div class="row">
-        <a href="/project?type=NEW" class="col-lg-3">New projects</a>
-        <a href="/project?type=ACCEPTED" class="col-lg-3">Accepted projects</a>
-        <a href="/project?type=DECLINED" class="col-lg-3">Declined projects</a>
-        <a href="/project?type=ARCHIVED" class="col-lg-3">Archived projects</a>
+    <div class="btn-group btn-group-lg" role="group" aria-label="Button group for project by type searching">
+        <a href="/project"> <button type="button" class="btn btn-secondary"> All </button> </a>
+        <a href="/project?type=NEW"> <button type="button" class="btn btn-secondary"> New projects </button> </a>
+        <a href="/project?type=ACCEPTED"> <button type="button" class="btn btn-secondary"> Accepted projects </button> </a>
+        <a href="/project?type=DECLINED"> <button type="button" class="btn btn-secondary"> Declined projects </button> </a>
+        <a href="/project?type=ARCHIVED"> <button type="button" class="btn btn-secondary"> Archived projects </button> </a>
     </div>
 
 
@@ -50,7 +51,7 @@
                 </div>
             </div>
         <#else>
-            No intensives right now zzz
+            No projects right now zzz
         </#list>
     </div>
 </@p.page>
