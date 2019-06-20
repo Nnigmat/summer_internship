@@ -50,7 +50,7 @@
                             <li class="list-group-item">
                                 <#if !project.isIntensiveListEmpty()>
                                     <#list project.intensive_list as intensive>
-                                        <a href="/intensive/${intensive.id}">${intensive.name}</a>
+                                        <a href="/intensive/${intensive.id}" style="color: inherit;">${intensive.name}</a>
                                     </#list>
                                 <#else>
                                     No intensives

@@ -36,11 +36,10 @@
             <div class="col-4">
                 <div class="card my-2" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">${project.name}</h5>
+                        <a href="/project/${project.id}" style="color: inherit;"><h5 class="card-title">${project.name}</h5></a>
                         <p class="card-text">
                             ${project.description}
                         </p>
-                        <a href="/project/${project.id}">Info >></a>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Date: ${project.date_created}</li>
                         </ul>
