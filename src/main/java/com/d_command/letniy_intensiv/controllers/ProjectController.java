@@ -8,6 +8,7 @@ import com.d_command.letniy_intensiv.repos.CommentRepo;
 import com.d_command.letniy_intensiv.repos.ProjectRepo;
 import com.d_command.letniy_intensiv.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,6 +73,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{project}/edit")
+    @PreAuthorize("hasAuthority('CURATOR')")
     public String project_edit(@PathVariable Project project, @RequestParam String name,
                                @RequestParam String description) {
         project.update(name, description);
@@ -81,6 +83,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{project}/add")
+    @PreAuthorize("hasAuthority('CURATOR')")
     public String project_add_user(@PathVariable Project project, @RequestParam String username) {
         project.addUser(userRepo.findByUsername(username));
         projectRepo.save(project);
@@ -97,6 +100,7 @@ public class ProjectController {
     }
 
     @PostMapping("/{project}/supervisor")
+    @PreAuthorize("hasAuthority('CURATOR')")
     public String add_supervisor(@PathVariable Project project, @RequestParam String username) {
         project.update(userRepo.findByUsername(username));
         projectRepo.save(project);

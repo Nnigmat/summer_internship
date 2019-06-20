@@ -1,5 +1,4 @@
 <#import "fragments/page.ftl" as p>
-<#import "fragments/new_project.ftl" as n>
 
 <@p.page "Projects list">
     <!-- Project types -->

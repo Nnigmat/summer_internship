@@ -6,6 +6,7 @@ import com.d_command.letniy_intensiv.domain.User;
 import com.d_command.letniy_intensiv.repos.IntensiveRepo;
 import com.d_command.letniy_intensiv.repos.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class IntensiveController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('CURATOR')")
     public String create_intensive(@RequestParam String name, @RequestParam String description,
                                    @RequestParam String date_start, @RequestParam String date_end,
                                    @AuthenticationPrincipal User user) {
@@ -51,6 +53,7 @@ public class IntensiveController {
     }
 
     @PostMapping("/{intensive}")
+    @PreAuthorize("hasAuthority('CURATOR')")
     public String add_project_to_intensive(@PathVariable Intensive intensive,
                                            @RequestParam String project) {
         intensive.addProject(projectRepo.findByName(project));
