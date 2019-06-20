@@ -3,7 +3,7 @@
 
 <@p.page "Projects list">
     <!-- Project types -->
-    <div class="btn-group btn-group-lg" role="group" aria-label="Button group for project by type searching">
+    <div class="btn-group btn-group-lg" role="group" aria-label="Button group for project by type searching" style="margin-bottom: 10px;">
         <a href="/project"> <button type="button" class="btn btn-light"> All </button> </a>
         <a href="/project?type=NEW"> <button type="button" class="btn btn-light"> New projects </button> </a>
         <a href="/project?type=ACCEPTED"> <button type="button" class="btn btn-light"> Accepted projects </button> </a>
