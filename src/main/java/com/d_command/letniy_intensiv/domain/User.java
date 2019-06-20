@@ -21,6 +21,9 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "team", fetch = FetchType.EAGER)
     private Set<Project> project_list;
 
+    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
+    private Set<Project> createdProjects;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -129,7 +132,16 @@ public class User implements UserDetails {
             this.password = password;
         }
     }
-//
+
+    public Set<Project> getCreatedProjects() {
+        return createdProjects;
+    }
+
+    public void setCreatedProjects(Set<Project> createdProjects) {
+        this.createdProjects = createdProjects;
+    }
+
+    //
 //    public Set<String> getTags() {
 //        return tags;
 //    }

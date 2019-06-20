@@ -1,12 +1,15 @@
 <#import "fragments/page.ftl" as p>
 
 <@p.page "Intensives list">
-    <h1>Our intensives</h1>
+    <div class="row">
+        <h1>Our intensives</h1>
+        <!-- New intensive -->
+        <hr>
+        <#if user_now.isCurator()>
+            <a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newIntensiveModal"> New intensive </button></a>
+        </#if>
+    </div>
     <hr>
-    <!-- New intensive -->
-    <#if user_now.isCurator()>
-        <a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newIntensiveModal"> New intensive </button></a>
-    </#if>
 
     <div class="modal fade" id="newIntensiveModal" tabindex="-1" role="dialog" aria-labelledby="newIntensiveModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
