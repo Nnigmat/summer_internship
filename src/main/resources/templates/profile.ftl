@@ -5,6 +5,8 @@
     <h1 class="row">User Profile</h1>
     <hr>
     <div class="row text-large">
+
+        <!-- User's info -->
         <div class="col-lg-4">
             <span class="text-muted">Username: </span>${user_now.username}<br>
             <span class="text-muted">Role: </span>
@@ -12,9 +14,14 @@
                 ${role}
             </#list>
             <br>
+
+
         </div>
+
         <div class="col-lg-8 text-left">
             <div class="row">
+
+                <!-- Projects user created -->
                 <div class="col-lg-6">
                     <div class="list-group list-group-flush shadow">
                        <span class="list-group-item active">Suggested projects</span>
@@ -25,6 +32,8 @@
                         </#list>
                     </div>
                 </div>
+
+                <!-- Projects user is a part of a team -->
                 <div class="col-lg-6">
                     <div class="list-group list-group-flush shadow">
                         <li class="list-group-item list-group-item-action active">Participated in projects</li>

@@ -1,4 +1,5 @@
 <#import "fragments/page.ftl" as p>
+<#import "fragments/modal.ftl" as m>
 
 <@p.page "Intensives list">
     <div class="row">
@@ -11,43 +12,27 @@
     </div>
     <hr>
 
-    <div class="modal fade" id="newIntensiveModal" tabindex="-1" role="dialog" aria-labelledby="newIntensiveModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newProjectModalLabel">New message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="/intensive" id="intensive">
-                        <div class="form-group">
-                            <label for="name" class="col-form-label">Name of intensive:</label>
-                            <input type="text" class="form-control" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" name="description"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="date_end" class="col-form-label">Date of start:</label>
-                            <textarea class="form-control" name="date_start"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="date_end" class="col-form-label">Date of end:</label>
-                            <textarea class="form-control" name="date_end"></textarea>
-                        </div>
-                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" value="save" onclick="event.preventDefault();document.getElementById('intensive').submit();">Create project</button>
-                </div>
+    <@m.modal "newIntensiveModal" "intensive">
+        <form method="post" action="/intensive" id="intensive">
+            <div class="form-group">
+                <label for="name" class="col-form-label">Name of intensive:</label>
+                <input type="text" class="form-control" name="name">
             </div>
-        </div>
-    </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea class="form-control" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="date_end" class="col-form-label">Date of start:</label>
+                <textarea class="form-control" name="date_start"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="date_end" class="col-form-label">Date of end:</label>
+                <textarea class="form-control" name="date_end"></textarea>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        </form>
+    </@m.modal>
 
     <!-- List of intensives -->
     <div class="row">
@@ -56,7 +41,7 @@
                 <div class="card my-2 shadow">
                     <div class="card-body">
                         <h5 class="card-title">${intensive.name}</h5>
-                        <p class="card-text">
+                        <p class="card-text" style="max-height: 100px">
                             ${intensive.description}
                         </p>
                         <a href="/intensive/${intensive.id}">Info >></a>

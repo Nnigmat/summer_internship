@@ -1,4 +1,5 @@
 <#import "fragments/page.ftl" as p>
+<#import "fragments/modal.ftl" as m>
 
 <@p.page "Projects list">
     <h1>Projects</h1>
@@ -14,35 +15,19 @@
         <a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newProjectModal"> New project </button></a>
     </div>
 
-    <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="newProjectModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="newProjectModalLabel">New message</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" action="/project" id="project">
-                        <div class="form-group">
-                            <label for="name" class="col-form-label">Name of project:</label>
-                            <input type="text" class="form-control" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <textarea class="form-control" name="description"></textarea>
-                        </div>
-                        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" value="save" onclick="event.preventDefault();document.getElementById('project').submit();">Create project</button>
-                </div>
+    <@m.modal "newProjectModal" "project">
+        <form method="post" action="/project" id="project">
+            <div class="form-group">
+                <label for="name" class="col-form-label">Name of project:</label>
+                <input type="text" class="form-control" name="name">
             </div>
-        </div>
-    </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea class="form-control" name="description"></textarea>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        </form>
+    </@m.modal>
 
     <!-- List of projects -->
     <div class="row">
