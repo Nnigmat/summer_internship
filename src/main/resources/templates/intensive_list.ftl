@@ -3,12 +3,16 @@
 
 <@p.page "Intensives list">
     <div class="row">
-        <h1>Our intensives</h1>
+
+        <div class="col-lg-4">
+            <h1>Our intensives</h1>
+        </div>
         <!-- New intensive -->
-        <hr>
-        <#if user_now.isCurator()>
-            <a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newIntensiveModal"> New intensive </button></a>
-        </#if>
+        <div class="col-lg-8">
+            <#if user_now.isCurator()>
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newIntensiveModal"> New intensive </button>
+            </#if>
+        </div>
     </div>
     <hr>
 

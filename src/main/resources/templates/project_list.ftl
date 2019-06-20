@@ -2,7 +2,14 @@
 <#import "fragments/modal.ftl" as m>
 
 <@p.page "Projects list">
-    <h1>Projects</h1>
+    <div class="row">
+        <div class="col-lg-4">
+            <h1>Projects</h1>
+        </div>
+        <div class="col-lg-8">
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newProjectModal"> New project </button>
+        </div>
+    </div>
     <hr>
 
     <!-- Project types -->
@@ -12,7 +19,6 @@
         <a href="/project?type=ACCEPTED"> <button type="button" class="btn btn-light"> Accepted projects </button> </a>
         <a href="/project?type=DECLINED"> <button type="button" class="btn btn-light"> Declined projects </button> </a>
         <a href="/project?type=ARCHIVED"> <button type="button" class="btn btn-light"> Archived projects </button> </a>
-        <a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newProjectModal"> New project </button></a>
     </div>
 
     <@m.modal "newProjectModal" "project">
