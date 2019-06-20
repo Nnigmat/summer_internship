@@ -1,4 +1,4 @@
-<#macro modal button_id form_id>
+<#macro modal button_id form_id button_text>
     <div class="modal fade" id="${button_id}" tabindex="-1" role="dialog" aria-labelledby="${button_id}Label" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" value="save" onclick="event.preventDefault();document.getElementById('${form_id}').submit();">Create project</button>
+                    <button type="button" class="btn btn-primary" value="save" onclick="event.preventDefault();document.getElementById('${form_id}').submit();">${button_text}</button>
                 </div>
             </div>
         </div>

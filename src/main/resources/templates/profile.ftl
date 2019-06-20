@@ -1,4 +1,5 @@
 <#import "fragments/page.ftl" as p>
+<#import "fragments/modal.ftl" as m>
 
 <@p.page "Profile">
 
@@ -8,15 +9,34 @@
 
         <!-- User's info -->
         <div class="col-lg-4">
-            <span class="text-muted">Username: </span>${user_now.username}<br>
-            <span class="text-muted">Role: </span>
-            <#list user_now.getAuthorities() as role>
-                ${role}
-            </#list>
-            <br>
-
-
+            <div class="row">
+                <div class="col-lg-8">
+                    <span class="text-muted">Username: </span>${user_now.username}<br>
+                    <span class="text-muted">Role: </span>
+                    <#list user_now.getAuthorities() as role>
+                        ${role}
+                    </#list>
+                </div>
+                <div class="col-lg-4">
+                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#editProfileModal"> Edit </button>
+                </div>
+            </div>
         </div>
+
+        <!-- Edit modal -->
+        <@m.modal "editProfileModal" "profile" "Update">
+            <form method="post" action="/profile" id="profile">
+                <div class="form-group">
+                    <label for="name" class="col-form-label">Username:</label>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-form-label">Password:</label>
+                    <input class="form-control" name="password" type="password">
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}" />
+            </form>
+        </@m.modal>
 
         <div class="col-lg-8 text-left">
             <div class="row">

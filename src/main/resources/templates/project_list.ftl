@@ -21,7 +21,7 @@
         <a href="/project?type=ARCHIVED"> <button type="button" class="btn btn-light"> Archived projects </button> </a>
     </div>
 
-    <@m.modal "newProjectModal" "project">
+    <@m.modal "newProjectModal" "project" "Create">
         <form method="post" action="/project" id="project">
             <div class="form-group">
                 <label for="name" class="col-form-label">Name of project:</label>
