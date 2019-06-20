@@ -44,11 +44,10 @@
             <div class="col-4">
                 <div class="card my-2 shadow">
                     <div class="card-body">
-                        <h5 class="card-title">${intensive.name}</h5>
+                        <a href="/intensive/${intensive.id}" style="color: inherit;"><h5 class="card-title">${intensive.name}</h5></a>
                         <p class="card-text" style="max-height: 100px">
                             ${intensive.description}
                         </p>
-                        <a href="/intensive/${intensive.id}">Info >></a>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Start: ${intensive.date_start}</li>
                             <li class="list-group-item">End: ${intensive.date_end}</li>
