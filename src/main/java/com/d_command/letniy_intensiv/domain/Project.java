@@ -2,6 +2,7 @@ package com.d_command.letniy_intensiv.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -44,7 +45,7 @@ public class Project {
         this.description = description;
         this.creator = user;
         this.date_created = LocalDate.now().toString();
-        this.type.add(ProjectType.NEW);
+        this.type = new HashSet<ProjectType>() {{ add(ProjectType.NEW);}};
     }
 
     public Long getId() {
