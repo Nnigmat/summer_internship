@@ -2,6 +2,7 @@ package com.d_command.letniy_intensiv.controllers;
 
 import com.d_command.letniy_intensiv.domain.Comment;
 import com.d_command.letniy_intensiv.domain.Project;
+import com.d_command.letniy_intensiv.domain.ProjectType;
 import com.d_command.letniy_intensiv.domain.User;
 import com.d_command.letniy_intensiv.repos.CommentRepo;
 import com.d_command.letniy_intensiv.repos.ProjectRepo;
@@ -28,8 +29,16 @@ public class ProjectController {
     private CommentRepo commentRepo;
 
     @GetMapping
-    public String project_list(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("projects", projectRepo.findAll());
+    public String project_list(Model model, @AuthenticationPrincipal User user, @RequestParam(required = false) ProjectType type) {
+        Iterable<Project> projects = null;
+        if (type != null) {
+            projects = projectRepo.findByType(type);
+        }
+        if (projects == null) {
+            projects = projectRepo.findAll();
+        }
+
+        model.addAttribute("projects", projects);
         model.addAttribute("user_now", user);
 
         return "project_list";

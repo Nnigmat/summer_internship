@@ -1,6 +1,15 @@
 <#import "fragments/page.ftl" as p>
 
 <@p.page "Projects list">
+    <!-- Project types -->
+    <div class="row">
+        <a href="/project?type=NEW" class="col-lg-3">New projects</a>
+        <a href="/project?type=ACCEPTED" class="col-lg-3">Accepted projects</a>
+        <a href="/project?type=DECLINED" class="col-lg-3">Declined projects</a>
+        <a href="/project?type=ARCHIVED" class="col-lg-3">Archived projects</a>
+    </div>
+
+
     <!-- Create project -->
     <@p.collapse "New project" "project">
         <form method="post" action="/project">

@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping
     public String search_user(@RequestParam String username, Model model,
                               @AuthenticationPrincipal User user) {
-        if (username == "") {
+        if (username.equals("")) {
             model.addAttribute("users", userRepo.findAll());
         } else {
             if (userRepo.findByUsername(username) != null) {
@@ -86,3 +86,4 @@ public class UserController {
         return "redirect:/user";
     }
 }
+

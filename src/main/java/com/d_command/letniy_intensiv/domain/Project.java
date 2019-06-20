@@ -32,6 +32,11 @@ public class Project {
     @JoinColumn(name = "supervisor_id")
     private User supervisor;
 
+    @ElementCollection(targetClass = ProjectType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "project_type", joinColumns = @JoinColumn(name = "project_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<ProjectType> type;
+
     public Project() {}
 
     public Project(String name, String description, User user) {
@@ -39,6 +44,7 @@ public class Project {
         this.description = description;
         this.creator = user;
         this.date_created = LocalDate.now().toString();
+        this.type.add(ProjectType.NEW);
     }
 
     public Long getId() {
@@ -133,5 +139,13 @@ public class Project {
 
     public void addUser(User user) {
         this.team.add(user);
+    }
+
+    public Set<ProjectType> getType() {
+        return type;
+    }
+
+    public void setType(Set<ProjectType> type) {
+        this.type = type;
     }
 }
