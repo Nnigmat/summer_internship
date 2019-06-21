@@ -47,5 +47,20 @@
             <column name="date_end" value="7/14/2019"></column>
         </insert>
     </changeSet>
+    
+    <changeSet id="3" author="nnigmat">
+        <dropColumn tableName="intensive" columnName="description"></dropColumn>
+        <addColumn tableName="intensive">
+            <column name="description" type="TEXT"></column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="4" author="nnigmat">
+        <addDefaultValue tableName="intensive" columnName="description" defaultValue="..."></addDefaultValue>
+        <update tableName="intensive">
+            <column name="description" value="..."></column>
+        </update>
+        <addNotNullConstraint tableName="intensive" columnName="description"></addNotNullConstraint>
+    </changeSet>
 
 </databaseChangeLog>

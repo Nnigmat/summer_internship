@@ -2,6 +2,7 @@ package com.d_command.letniy_intensiv.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,6 +33,11 @@ public class Project {
     @JoinColumn(name = "supervisor_id")
     private User supervisor;
 
+    @ElementCollection(targetClass = ProjectType.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "project_type", joinColumns = @JoinColumn(name = "project_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<ProjectType> type;
+
     public Project() {}
 
     public Project(String name, String description, User user) {
@@ -39,6 +45,7 @@ public class Project {
         this.description = description;
         this.creator = user;
         this.date_created = LocalDate.now().toString();
+        this.type = new HashSet<ProjectType>() {{ add(ProjectType.NEW);}};
     }
 
     public Long getId() {
@@ -118,11 +125,11 @@ public class Project {
     }
 
     public void update(String name, String description) {
-        if (name != "") {
+        if (!name.isEmpty()) {
             this.name = name;
         }
 
-        if (description != "") {
+        if (!description.isEmpty()) {
             this.description = description;
         }
     }
@@ -133,5 +140,17 @@ public class Project {
 
     public void addUser(User user) {
         this.team.add(user);
+    }
+
+    public Set<ProjectType> getType() {
+        return type;
+    }
+
+    public void setType(Set<ProjectType> type) {
+        this.type = type;
+    }
+
+    public boolean isCreator(User user) {
+        return this.getCreator().getId().equals(user.getId());
     }
 }

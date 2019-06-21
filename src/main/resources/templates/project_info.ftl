@@ -1,49 +1,75 @@
 <#import "fragments/page.ftl" as p>
+<#import "fragments/modal.ftl" as m>
 
 <@p.page "${project.name}">
-    <!-- Description of intensive -->
-    <h3>${project.name}</h3>
-    <p>${project.description}</p>
-    <p>Created: ${project.date_created}</p>
-    <p>Creator: ${project.creator.username}</p>
-
-    <!-- Change description -->
-    <#if user_now.isModerator() || user_now.id == project.creator.id>
-        <@p.collapse "Edit" "edit">
-            <form method="post" action="/project/${project.id}/edit">
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <input type="text" placeholder="Name of project" name="name" class="form-control my-2"/>
-                <input type="text" placeholder="Description of project" name="description" class="form-control my-2"/>
-                <button type="submit" class="btn btn-primary mt-2">Update</button>
-            </form>
-        </@p.collapse>
-    </#if>
-
-    <!-- Add users -->
-    <#if user_now.isCurator()>
-        <@p.collapse "Add participant" "add_user">
-            <form method="post" action="/project/${project.id}/add">
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <label for="selectUser">Select new participant</label>
-                <select id="selectUser" name="username">
-                    <#list all_users as user>
-                        <option selected>${user.username}</option>
-                    </#list>
-                </select>
-                <button type="submit" class="btn btn-primary mt-2">Add</button>
-            </form>
-        </@p.collapse>
-    </#if>
-
-    <!-- Team -->
-    <h3>Team members: </h3>
-    <#list project.team as user>
-        <div>
-            ${user.username}
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>${project.name}</h1>
         </div>
-    <#else>
-        <h5>No participants yet</h5>
-    </#list>
+        <div class="col-lg-4">
+            <#if user_now.isModerator() || project.isCreator(user_now)>
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                        data-target="#editProjectModal"> Edit
+                </button>
+            </#if>
+        </div>
+    </div>
+    <hr>
+    <!-- Description of intensive -->
+    <div class="row">
+        <p class="col-lg-12">${project.description}</p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9">
+            <!-- Team -->
+            <i class="text-muted">Team:</i> <#list project.team as user> ${user.username}<#sep>, <#else> ... </#list>
+            <!-- Add users -->
+            <#if user_now.isCurator()>
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addUserModal">Add user</button>
+            </#if>
+        </div>
+        <div class="col-lg-3 list-group list-group-flush">
+            <span class="list-group-item"><i class="text-muted">Created:</i> ${project.date_created}<br></span>
+            <span class="list-group-item"><i class="text-muted">Curator:</i> ${project.creator.username}<br></span>
+            <span class="list-group-item"><i
+                        class="text-muted">Supervisor:</i> <#if project.supervisor??>${project.supervisor.username}<#else>...</#if></span>
+        </div>
+    </div>
+    <hr>
+
+    <@m.modal "addUserModal" "user" "Add" "Add User">
+        <div class="input-group mb3">
+        <form method="post" action="/project/${project.id}/add" id="user" class="form-inline">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Options</label>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <select id="selectUser" name="username" class="custom-select">
+                <option selected>Choose...</option>
+                <#list all_users as user>
+                    <option>${user.username}</option>
+                </#list>
+            </select>
+        </div>
+        </form>
+    </@m.modal>
+
+    <@m.modal "editProjectModal" "project" "Update" "Edit project information">
+        <form method="post" action="/project/${project.id}/edit" id="project">
+            <div class="form-group">
+                <label for="name" class="col-form-label">Name of project:</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea class="form-control" name="description"></textarea>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        </form>
+    </@m.modal>
+
+
 
     <!-- Add supervisor -->
     <#if user_now.isCurator() && !project.supervisor??>
@@ -61,41 +87,34 @@
         </@p.collapse>
     </#if>
 
-    <!-- Supervisor -->
-    <#if project.supervisor??>
-        <h3>Supervisor: </h3>
-        <p>${project.supervisor.username}</p>
-    <#else>
-        <h5>No supervisor</h5>
-    </#if>
-
-    <!-- Add comment -->
-    <@p.collapse "Send comment" "add_comment">
-        <form method="post" action="/project/${project.id}/comment">
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <form method="post" action="/project/${project.id}/comment" class="row">
+        <div class="col-lg-10">
             <input type="text" name="text" placeholder="Your message" class="form-control my-2"/>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        </div>
+        <div class="col-lg-2">
             <button type="submit" class="btn btn-primary mt-2">Send</button>
-        </form>
-    </@p.collapse>
+        </div>
+    </form>
 
     <!-- Comments -->
-    <div class="row">
+    <ul class="list-group list-group-flush">
         <#list comments as comment>
-            <div class="col-4">
-                <div class="card my-2">
-                    <div class="card-body">
-                        <h5 class="card-title">${comment.creator.username}</h5>
-                        <p class="card-text">
-                            ${comment.text}
-                        </p>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-lg-1">
+                        <i class="text-muted">${comment.creator.username}: </i>
                     </div>
-                    <div class="card-footer text-muted">
-                        Date: ${comment.date_created}
+                    <div class="col-lg-9">
+                        ${comment.text}
+                    </div>
+                    <div class="col-lg-2 text-muted">
+                        <i>${comment.date_created}</i>
                     </div>
                 </div>
-            </div>
+            </li>
         <#else>
-            <h5>No comments Kappa</h5>
+            <span class="list-group-item text-muted">no comments</span>
         </#list>
-    </div>
+    </ul>
 </@p.page>

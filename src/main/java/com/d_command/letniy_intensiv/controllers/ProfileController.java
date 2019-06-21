@@ -1,6 +1,8 @@
 package com.d_command.letniy_intensiv.controllers;
 
+import com.d_command.letniy_intensiv.domain.Project;
 import com.d_command.letniy_intensiv.domain.User;
+import com.d_command.letniy_intensiv.repos.ProjectRepo;
 import com.d_command.letniy_intensiv.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,16 +13,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private ProjectRepo projectRepo;
+
     @GetMapping
     public String get_profile(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("user_now", user);
-
         return "profile";
     }
 

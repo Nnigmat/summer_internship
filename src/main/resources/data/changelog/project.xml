@@ -45,4 +45,13 @@
         </insert>
     </changeSet>
 
+    <changeSet id="3" author="nnigmat">
+        <dropColumn tableName="project" columnName="description"></dropColumn>
+        <addColumn tableName="project">
+            <column name="description" type="TEXT" defaultValue="...">
+                <constraints nullable="false"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

@@ -20,5 +20,8 @@
     <include file="data/changelog/project_tags.xml"></include>
     <include file="data/changelog/user_tags.xml"></include>
 
+    <!-- Project types -->
+    <include file="data/changelog/project_type.xml"></include>
+
 
 </databaseChangeLog>
