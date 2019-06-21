@@ -1,0 +1,21 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="nnigmat">
+        <createTable tableName="user_tags">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_user_account" references="usr(id)"></constraints>
+            </column>
+            <column name="tag_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_tag_account" references="tag(id)"></constraints>
+            </column>
+        </createTable>
+
+        <addPrimaryKey tableName="user_tags" columnNames="user_id, tag_id"></addPrimaryKey>
+    </changeSet>
+
+</databaseChangeLog>

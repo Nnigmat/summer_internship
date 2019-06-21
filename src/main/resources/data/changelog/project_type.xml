@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="nnigmat">
+        <createTable tableName="project_type">
+            <column name="project_id" type="bigint">
+                <constraints foreignKeyName="fk_user_account" references="project(id)" nullable="false"></constraints>
+            </column>
+            <column name="type" type="varchar(128)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="nnigmat">
+        <dropColumn tableName="project_type" columnName="type"></dropColumn>
+        <addColumn tableName="project_type">
+            <column name="type" type="varchar(128)" defaultValue="NEW">
+                <constraints nullable="false"></constraints>
+            </column>
+        </addColumn>
+
+        <insert tableName="project_type">
+            <column name="project_id" value="-1"></column>
+            <column name="type" value="ACCEPTED"></column>
+        </insert>
+
+        <insert tableName="project_type">
+            <column name="project_id" value="0"></column>
+            <column name="type" value="NEW"></column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

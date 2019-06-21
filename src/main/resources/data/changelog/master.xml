@@ -5,7 +5,23 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+    <!-- Main entities -->
     <include file="data/changelog/user.xml"></include>
-    <include file="data/changelog/project.xml"></include>
     <include file="data/changelog/intensive.xml"></include>
+    <include file="data/changelog/project.xml"></include>
+    <include file="data/changelog/comment.xml"></include>
+
+    <!-- FK -->
+    <include file="data/changelog/intensive_project.xml"></include>
+    <include file="data/changelog/project_user.xml"></include>
+
+    <!-- Tags -->
+    <include file="data/changelog/tag.xml"></include>
+    <include file="data/changelog/project_tags.xml"></include>
+    <include file="data/changelog/user_tags.xml"></include>
+
+    <!-- Project types -->
+    <include file="data/changelog/project_type.xml"></include>
+
+
 </databaseChangeLog>
