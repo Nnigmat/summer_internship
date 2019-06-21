@@ -1,9 +1,19 @@
 <#import "fragments/page.ftl" as p>
+<#import "fragments/modal.ftl" as m>
 
 <@p.page "${project.name}">
+    <div class="row">
+        <div class="col-lg-8">
+            <h1>${project.name}</h1>
+        </div>
+        <div class="col-lg-4">
+            <#if user_now.isModerator() || project.isCreator(user_now)>
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#editProjectModal"> Edit </button>
+            </#if>
+        </div>
+    </div>
     <!-- Description of intensive -->
     <div class="row">
-        <h1>${project.name}</h1>
         <div class="col-lg-9">
             <p>${project.description}</p>
             <!-- Team -->
@@ -20,22 +30,22 @@
             <i>Created:</i> ${project.date_created}<br>
             <i>Curator:</i> ${project.creator.username}
         </div>
-
-
     </div>
     <hr>
 
-    <!-- Change description -->
-    <#if user_now.isModerator() || user_now.id == project.creator.id>
-        <@p.collapse "Edit" "edit">
-            <form method="post" action="/project/${project.id}/edit">
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <input type="text" placeholder="Name of project" name="name" class="form-control my-2"/>
-                <input type="text" placeholder="Description of project" name="description" class="form-control my-2"/>
-                <button type="submit" class="btn btn-primary mt-2">Update</button>
-            </form>
-        </@p.collapse>
-    </#if>
+    <@m.modal "editProjectModal" "project" "Update">
+        <form method="post" action="/project/${project.id}/edit" id="project">
+            <div class="form-group">
+                <label for="name" class="col-form-label">Name of project:</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea class="form-control" name="description"></textarea>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        </form>
+    </@m.modal>
 
     <!-- Add users -->
     <#if user_now.isCurator()>

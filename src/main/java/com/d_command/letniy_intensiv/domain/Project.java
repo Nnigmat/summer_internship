@@ -149,4 +149,8 @@ public class Project {
     public void setType(Set<ProjectType> type) {
         this.type = type;
     }
+
+    public boolean isCreator(User user) {
+        return this.getCreator().getId().equals(user.getId());
+    }
 }

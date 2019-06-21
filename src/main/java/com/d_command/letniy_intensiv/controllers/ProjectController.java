@@ -73,12 +73,12 @@ public class ProjectController {
     }
 
     @PostMapping("/{project}/edit")
-    @PreAuthorize("hasAnyAuthority('CURATOR', 'MODERATOR')")
     public String project_edit(@PathVariable Project project, @RequestParam String name,
-                               @RequestParam String description) {
-        project.update(name, description);
-        projectRepo.save(project);
-
+                               @RequestParam String description, @AuthenticationPrincipal User user) {
+        if (user.isModerator() || project.isCreator(user)) {
+            project.update(name, description);
+            projectRepo.save(project);
+        }
         return "redirect:/project/" + project.getId();
     }
 
