@@ -125,11 +125,11 @@ public class Project {
     }
 
     public void update(String name, String description) {
-        if (name != "") {
+        if (!name.isEmpty()) {
             this.name = name;
         }
 
-        if (description != "") {
+        if (!description.isEmpty()) {
             this.description = description;
         }
     }

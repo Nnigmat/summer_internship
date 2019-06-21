@@ -45,7 +45,7 @@
                 <div class="card my-2 shadow">
                     <div class="card-body">
                         <a href="/intensive/${intensive.id}" style="color: inherit;"><h5 class="card-title">${intensive.name}</h5></a>
-                        <p class="card-text" style="max-height: 100px">
+                        <p class="card-text" style="max-height: 100px; overflow: hidden; text-overflow: ellipsis;">
                             ${intensive.description}
                         </p>
                         <ul class="list-group list-group-flush">

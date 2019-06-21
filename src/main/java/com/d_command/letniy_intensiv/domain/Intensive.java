@@ -98,4 +98,19 @@ public class Intensive {
     public void deleteProject(Project project) {
         project_list.remove(project);
     }
+
+    public void update(String name, String description, String date_start, String date_end) {
+        if (!name.isEmpty()) {
+            this.name = name;
+        }
+        if (!description.isEmpty()) {
+            this.description = description;
+        }
+        if (!date_start.isEmpty()) {
+            this.date_start = date_start;
+        }
+        if (!date_end.isEmpty()) {
+            this.date_end = date_end;
+        }
+    }
 }

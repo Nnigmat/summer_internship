@@ -1,9 +1,42 @@
 <#import "fragments/page.ftl" as p>
+<#import "fragments/modal.ftl" as m>
 
 <@p.page "${intensive.name}">
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>${intensive.name}</h1>
+        </div>
+        <#if user_now.isCurator() >
+             <div class="col-lg-6">
+                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#editIntensiveModal"> Edit </button>
+            </div>
+        </#if>
+    </div>
+
+    <@m.modal "editIntensiveModal" "intensive" "Update" "Edit intensive">
+        <form method="post" action="/intensive/${intensive.id}/edit" id="intensive">
+            <div class="form-group">
+                <label for="name" class="col-form-label">Name of intensive:</label>
+                <input type="text" class="form-control" name="name">
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Description:</label>
+                <textarea class="form-control" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Date of start:</label>
+                <input class="form-control" name="date_start"></input>
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-form-label">Date of end:</label>
+                <input class="form-control" name="date_end"></input>
+            </div>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        </form>
+    </@m.modal>
+
     <!-- Description of intensive -->
     <div class="row">
-        <h1>${intensive.name}</h1>
         <div class="col-lg-9">
             <p>${intensive.description}</p>
         </div>

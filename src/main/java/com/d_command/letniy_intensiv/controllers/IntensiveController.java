@@ -24,7 +24,7 @@ public class IntensiveController {
     private ProjectRepo projectRepo;
 
     @GetMapping
-    public String intensive_list(Model model, @AuthenticationPrincipal User user) {
+    public String intensiveList(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("intensives", intensiveRepo.findAll());
         model.addAttribute("user_now", user);
 
@@ -33,7 +33,7 @@ public class IntensiveController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('CURATOR')")
-    public String create_intensive(@RequestParam String name, @RequestParam String description,
+    public String createIntensive(@RequestParam String name, @RequestParam String description,
                                    @RequestParam String date_start, @RequestParam String date_end,
                                    @AuthenticationPrincipal User user) {
         intensiveRepo.save(new Intensive(name, description, date_end, date_start, user));
@@ -42,7 +42,7 @@ public class IntensiveController {
     }
 
     @GetMapping("/{intensive}")
-    public String intensive_info(Model model, @AuthenticationPrincipal User user,
+    public String intensiveInfo(Model model, @AuthenticationPrincipal User user,
                                  @PathVariable Intensive intensive) {
         model.addAttribute("intensive", intensive);
         model.addAttribute("projects", intensive.getProject_list());
@@ -54,9 +54,20 @@ public class IntensiveController {
 
     @PostMapping("/{intensive}")
     @PreAuthorize("hasAuthority('CURATOR')")
-    public String add_project_to_intensive(@PathVariable Intensive intensive,
+    public String addProjectToIntensive(@PathVariable Intensive intensive,
                                            @RequestParam String project) {
         intensive.addProject(projectRepo.findByName(project));
+        intensiveRepo.save(intensive);
+
+        return "redirect:/intensive/{intensive}";
+    }
+
+    @PostMapping("/{intensive}/edit")
+    @PreAuthorize("hasAuthority('CURATOR')")
+    public String editIntensive(@PathVariable Intensive intensive, @RequestParam String name,
+                                @RequestParam String description, @RequestParam String date_start, @RequestParam String date_end) {
+        intensive.update(name, description, date_start, date_end);
+
         intensiveRepo.save(intensive);
 
         return "redirect:/intensive/{intensive}";

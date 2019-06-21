@@ -39,10 +39,10 @@
     <div class="row">
         <#list projects as project>
             <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card my-2 shadow" style="width: 18rem;">
+                <div class="card my-2 shadow" style="width: 18rem">
                     <div class="card-body">
                         <a href="/project/${project.id}" style="color: inherit;"><h5 class="card-title">${project.name}</h5></a>
-                        <p class="card-text">
+                        <p class="card-text text-break" style="max-height: 150px; overflow: hidden; text-overflow: ellipsis;">
                             ${project.description}
                         </p>
                         <ul class="list-group list-group-flush">
