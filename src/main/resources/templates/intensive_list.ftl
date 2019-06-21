@@ -16,7 +16,7 @@
     </div>
     <hr>
 
-    <@m.modal "newIntensiveModal" "intensive" "Create">
+    <@m.modal "newIntensiveModal" "intensive" "Create" "Create intensive">
         <form method="post" action="/intensive" id="intensive">
             <div class="form-group">
                 <label for="name" class="col-form-label">Name of intensive:</label>

@@ -24,7 +24,7 @@
         </div>
 
         <!-- Edit modal -->
-        <@m.modal "editProfileModal" "profile" "Update">
+        <@m.modal "editProfileModal" "profile" "Update" "Edit information">
             <form method="post" action="/profile" id="profile">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Username:</label>
