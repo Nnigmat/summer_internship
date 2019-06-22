@@ -1,7 +1,7 @@
 <#import "fragments/page.ftl" as p>
 <#import "fragments/modal.ftl" as m>
 
-<@p.page "${intensive.name}">
+<@p.page "Intensive info">
     <div class="row">
         <div class="col-lg-6">
             <h1>${intensive.name}</h1>
@@ -13,6 +13,29 @@
         </#if>
     </div>
 
+    <!-- Description of intensive -->
+    <div class="row">
+        <div class="col-lg-9">
+            <p>${intensive.description}</p>
+        </div>
+        <div class="col-lg-3">
+            <i>Dates:</i> ${intensive.date_start} - ${intensive.date_end} <br>
+            <i>Curator:</i> ${intensive.curator.username}
+        </div>
+    </div>
+
+    <!-- Control zone -->
+    <#if user_now.isCurator()>
+        <div class="form-row my-3">
+            <div class="col">
+                <button type="button" class="btn btn-primary"
+                        data-toggle="modal" data-target="#addProject">Add project
+                </button>
+            </div>
+        </div>
+    </#if>
+
+    <!-- Modals -->
     <@m.modal "editIntensiveModal" "intensive" "Update" "Edit intensive">
         <form method="post" action="/intensive/${intensive.id}/edit" id="intensive">
             <div class="form-group">
@@ -35,34 +58,26 @@
         </form>
     </@m.modal>
 
-    <!-- Description of intensive -->
-    <div class="row">
-        <div class="col-lg-9">
-            <p>${intensive.description}</p>
-        </div>
-        <div class="col-lg-3">
-            <i>Dates:</i> ${intensive.date_start} - ${intensive.date_end} <br>
-            <i>Curator:</i> ${intensive.curator.username}
-        </div>
-    </div>
-
-    <!-- Add project -->
-    <#if user_now.isCurator()>
-        <@p.collapse "Add project" "project">
-            <form method="post" action="/intensive/${intensive.id}">
+    <@m.modal "addProject" "project" "Add" "Add project">
+        <#if isEmpty>
+            <p>No new projects available</p>
+        </#if>
+        <div class="input-group mb3">
+            <form method="post" action="/intensive/${intensive.id}" id="project" class="form-inline">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="selectProject">Projects</label>
+                </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <label for="selectProject">Select project</label>
-                <select id="selectProject" name="project">
-                    <#list all_projects as project>
-                        <option selected>${project.name}</option>
+                <select id="selectProject" name="project_name" class="custom-select">
+                    <option selected>Choose...</option>
+                    <#list all_projects as item>
+                        <option selected>${item.name}</option>
                     </#list>
                 </select>
-                <button type="submit" class="btn btn-primary mt-2">Add</button>
             </form>
-        </@p.collapse>
-    </#if>
+        </div>
+    </@m.modal>
 
-    <hr>
     <!-- List of projects -->
     <div class="row">
         <#list projects as project>

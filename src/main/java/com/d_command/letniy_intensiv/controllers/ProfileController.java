@@ -1,9 +1,7 @@
 package com.d_command.letniy_intensiv.controllers;
 
-import com.d_command.letniy_intensiv.domain.Project;
 import com.d_command.letniy_intensiv.domain.User;
-import com.d_command.letniy_intensiv.repos.ProjectRepo;
-import com.d_command.letniy_intensiv.repos.UserRepo;
+import com.d_command.letniy_intensiv.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -13,18 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 @Controller
 @RequestMapping("/profile")
 public class ProfileController {
     @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
-    private ProjectRepo projectRepo;
+    private UserService userService;
 
     @GetMapping
     public String get_profile(@AuthenticationPrincipal User user, Model model) {
@@ -34,11 +25,9 @@ public class ProfileController {
 
     @PostMapping
     public String edit_profile(@RequestParam String username, @RequestParam String password,
+                               @RequestParam String name, @RequestParam String surname,
                                @AuthenticationPrincipal User user) {
-        if (userRepo.findByUsername(username) == null) {
-            user.update(username, password);
-            userRepo.save(user);
-        }
+        userService.update(user, username, password, name, surname);
 
         return "redirect:/profile";
     }

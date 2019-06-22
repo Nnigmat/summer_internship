@@ -71,4 +71,15 @@
         </insert>
     </changeSet>
 
+    <changeSet id="4" author="nnigmat">
+        <addColumn tableName="usr">
+            <column name="name" type="varchar(128)" defaultValue="?">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="surname" type="varchar(128)" defaultValue="?">
+                <constraints nullable="false"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

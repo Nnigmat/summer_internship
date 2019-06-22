@@ -2,7 +2,12 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-info mb-3">
     <!-- Main page -->
-    <a class="navbar-brand text-white" href="/" style="font-weight: bold">Home</a>
+    <#if title == "Main page">
+    <a class="navbar-brand text-danger" href="/" style="font-weight: bold">
+        <#else>
+        <a class="navbar-brand text-white" href="/" style="font-weight: bold">
+            </#if>
+            Home</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -12,23 +17,44 @@
         <ul class="navbar-nav mr-auto">
             <!-- Intensives list -->
             <li class="nav-item">
-                <a class="nav-link text-white" href="/intensive">Intensives</a>
+                <#if title == "Intensive info" || title == "Intensives list">
+                <a class="nav-link text-danger" href="/intensive">
+                    <#else>
+                    <a class="nav-link text-white" href="/intensive">
+                        </#if>
+                        Intensives</a>
             </li>
             <!-- Projects list -->
             <li class="nav-item">
-                <a class="nav-link text-white" href="/project">Projects</a>
+                <#if title == "Project info" || title == "Projects list">
+                <a class="nav-link text-danger" href="/project">
+                    <#else>
+                    <a class="nav-link text-white" href="/project">
+                        </#if>
+                        Projects</a>
             </li>
             <!-- Users list -->
             <#if isAdmin>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="/user">Users</a>
+                    <#if title == "Users List">
+                    <a class="nav-link text-danger" href="/user">
+                        <#else>
+                        <a class="nav-link text-white" href="/user">
+                            </#if>
+                            Users</a>
                 </li>
             </#if>
         </ul>
 
         <!-- Profile -->
         <div class="navbar-text mr-3">
-            <a href="/profile"><i class="text-white">${name}</i></a>
+            <a href="/profile">
+                <#if title == "Profile">
+                <i class="text-danger">
+                    <#else>
+                    <i class="text-white">
+                        </#if>
+                        ${name}</i></a>
         </div>
 
         <!-- Logout -->

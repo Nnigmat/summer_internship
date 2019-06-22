@@ -16,6 +16,8 @@ public class User implements UserDetails {
 
     private String username;
     private String password;
+    private String name;
+    private String surname;
     private boolean active;
 
     @ManyToMany(mappedBy = "team", fetch = FetchType.EAGER)
@@ -108,6 +110,22 @@ public class User implements UserDetails {
         this.project_list = project_list;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public boolean isCurator() {
         return roles.contains(Role.CURATOR);
     }
@@ -124,12 +142,18 @@ public class User implements UserDetails {
         return roles.contains(Role.BAN);
     }
 
-    public void update(String username, String password) {
+    public void update(String username, String password, String name, String surname) {
         if (username != "") {
             this.username = username;
         }
         if (password != "") {
             this.password = password;
+        }
+        if (name != "") {
+            this.name = name;
+        }
+        if (surname != "") {
+            this.surname = surname;
         }
     }
 

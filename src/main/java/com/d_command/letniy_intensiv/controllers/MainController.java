@@ -3,7 +3,7 @@ package com.d_command.letniy_intensiv.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+@Controller //meme controller
 public class MainController {
     @GetMapping("/")
     public String intensive_list() {

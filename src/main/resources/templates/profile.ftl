@@ -12,6 +12,9 @@
             <div class="row">
                 <div class="col-lg-8">
                     <span class="text-muted">Username: </span>${user_now.username}<br>
+                    <span class="text-muted">Password: </span>${user_now.password}<br>
+                    <span class="text-muted">Name: </span>${user_now.name}<br>
+                    <span class="text-muted">Surname: </span>${user_now.surname}<br>
                     <span class="text-muted">Role: </span>
                     <#list user_now.getAuthorities() as role>
                         ${role}
@@ -33,6 +36,14 @@
                 <div class="form-group">
                     <label for="password" class="col-form-label">Password:</label>
                     <input class="form-control" name="password" type="password">
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-form-label">Name:</label>
+                    <input class="form-control" name="name" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="surname" class="col-form-label">Surname:</label>
+                    <input class="form-control" name="surname" type="text">
                 </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
             </form>

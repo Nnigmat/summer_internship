@@ -134,10 +134,6 @@ public class Project {
         }
     }
 
-    public void update(User user) {
-        this.supervisor = user;
-    }
-
     public void addUser(User user) {
         this.team.add(user);
     }
