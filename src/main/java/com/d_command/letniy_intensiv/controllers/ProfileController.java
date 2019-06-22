@@ -19,7 +19,9 @@ public class ProfileController {
 
     @GetMapping
     public String get_profile(@AuthenticationPrincipal User user, Model model) {
+        userService.profileInfo(user, model);
         model.addAttribute("user_now", user);
+
         return "profile";
     }
 

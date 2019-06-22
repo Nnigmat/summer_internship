@@ -142,6 +142,10 @@ public class User implements UserDetails {
         return roles.contains(Role.BAN);
     }
 
+    public boolean isUser() {
+        return roles.contains(Role.USER);
+    }
+
     public void update(String username, String password, String name, String surname) {
         if (username != "") {
             this.username = username;
