@@ -34,7 +34,11 @@ public class ProjectService {
     }
 
     public void create(String name, String description, User user) {
-        projectRepo.save(new Project(name, description, user));
+        if (name == "" || projectRepo.findByName(name) != null) {
+            //error msg
+        } else {
+            projectRepo.save(new Project(name, description, user));
+        }
     }
 
     public void projectInfo(Project project, Model model) {

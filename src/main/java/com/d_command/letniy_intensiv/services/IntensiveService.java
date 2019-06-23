@@ -26,7 +26,11 @@ public class IntensiveService {
     }
 
     public void create(String name, String description, String date_end, String date_start, User user) {
-        intensiveRepo.save(new Intensive(name, description, date_end, date_start, user));
+        if (name == "") {
+            //error msg, but i'm lazy
+        } else {
+            intensiveRepo.save(new Intensive(name, description, date_end, date_start, user));
+        }
     }
 
     public void intensiveInfo(Intensive intensive, Model model) {

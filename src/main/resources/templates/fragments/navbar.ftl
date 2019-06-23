@@ -2,7 +2,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-info mb-3">
     <!-- Main page -->
-    <#if title == "Main page">
+    <#if title == "Home page">
     <a class="navbar-brand text-danger" href="/" style="font-weight: bold">
         <#else>
         <a class="navbar-brand text-white" href="/" style="font-weight: bold">
@@ -50,11 +50,11 @@
         <div class="navbar-text mr-3">
             <a href="/profile">
                 <#if title == "Profile">
-                <i class="text-danger">
+                <i class="text-danger" id="-1">
                     <#else>
-                    <i class="text-white">
+                    <i class="text-white" id="-1">
                         </#if>
-                        ${name}</i></a>
+                        <@text "-1" "${name}"/></i></a>
         </div>
 
         <!-- Logout -->

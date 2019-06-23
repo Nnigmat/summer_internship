@@ -11,10 +11,10 @@
         <div class="col-lg-4">
             <div class="row">
                 <div class="col-lg-8">
-                    <span class="text-muted">Username: </span>${user_now.username}<br>
-                    <span class="text-muted">Password: </span>${user_now.password}<br>
-                    <span class="text-muted">Name: </span>${user_now.name}<br>
-                    <span class="text-muted">Surname: </span>${user_now.surname}<br>
+                    <span class="text-muted">Username: </span><a id="1"><@p.text "1" "${user_now.username}"/></a><br>
+                    <span class="text-muted">Password: </span><a id="2"><@p.text "2" "${user_now.password}"/></a><br>
+                    <span class="text-muted">Name: </span><a id="3"><@p.text "3" "${user_now.name}"/></a><br>
+                    <span class="text-muted">Surname: </span><a id="4"><@p.text "4" "${user_now.surname}"/></a><br>
                     <span class="text-muted">Role: </span>
                     <#list user_now.getAuthorities() as role>
                         ${role}
@@ -57,8 +57,9 @@
                     <div class="list-group list-group-flush shadow">
                        <span class="list-group-item active">Suggested projects</span>
                         <#list user_now.getCreatedProjects() as project>
-                            <a href="/project/${project.id}" class="list-group-item list-group-item-action">
-                                ${project.name}
+                            <a href="/project/${project.id}" class="list-group-item list-group-item-action"
+                               id="${project.id}list1">
+                                <@p.text "${project.id}list1" "${project.name}"/>
                             </a>
                         </#list>
                     </div>
@@ -74,8 +75,9 @@
                                 <li class="list-group-item list-group-item-action active">Curator of projects</li>
                             </#if>
                             <#list projects as project>
-                                <a href="/project/${project.id}" class="list-group-item list-group-item-action">
-                                    ${project.name}
+                                <a href="/project/${project.id}" class="list-group-item list-group-item-action"
+                                   id="${project.id}list2">
+                                    <@p.text "${project.id}list2" "${project.name}"/>
                                 </a>
                             </#list>
                         </div>

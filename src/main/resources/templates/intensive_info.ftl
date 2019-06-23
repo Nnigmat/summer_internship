@@ -4,7 +4,7 @@
 <@p.page "Intensive info">
     <div class="row">
         <div class="col-lg-6">
-            <h1>${intensive.name}</h1>
+            <h1 id="1"><@p.text "1" "${intensive.name}"/></h1>
         </div>
         <#if user_now.isCurator() >
              <div class="col-lg-6">
@@ -16,11 +16,11 @@
     <!-- Description of intensive -->
     <div class="row">
         <div class="col-lg-9">
-            <p>${intensive.description}</p>
+            <p id="2"><@p.text "2" "${intensive.description}"/></p>
         </div>
         <div class="col-lg-3">
-            <i>Dates:</i> ${intensive.date_start} - ${intensive.date_end} <br>
-            <i>Curator:</i> ${intensive.curator.username}
+            <i>Dates:</i> <a id="3"><@p.text "3" "${intensive.date_start} - ${intensive.date_end}"/></a><br>
+            <i>Curator:</i> <a id="5"><@p.text "4" "${intensive.curator.username}"/></a>
         </div>
     </div>
 
@@ -71,7 +71,7 @@
                 <select id="selectProject" name="project_name" class="custom-select">
                     <option selected>Choose...</option>
                     <#list all_projects as item>
-                        <option selected>${item.name}</option>
+                        <option selected id="${item.id}list1"><@p.text "${item.id}list1" "${item.name}"/></option>
                     </#list>
                 </select>
             </form>
@@ -84,16 +84,19 @@
             <div class="col-4">
                 <div class="card my-2" style="width: 18rem;">
                     <div class="card-body">
-                        <a href="/project/${project.id}" style="color: inherit;"><h5 class="card-title">${project.name}</h5></a>
-                        <p class="card-text">
-                            ${project.description}
+                        <a href="/project/${project.id}" style="color: inherit;"><h5 class="card-title"
+                                                                                     id="${project.id}list2">
+                                <@p.text "${project.id}list2" "${project.name}"/></h5></a>
+                        <p class="card-text" id="${project.id}list3">
+                            <@p.text "${project.id}list3" "${project.description}"/>
                         </p>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Date: ${project.date_created}</li>
+                            <li class="list-group-item"
+                                id="${project.id}list4"><@p.text "${project.id}list4" "Date: ${project.date_created}"/></li>
                         </ul>
                     </div>
-                    <div class="card-footer text-muted">
-                        Creator: ${project.creator.username}
+                    <div class="card-footer text-muted" id="${project.id}list5">
+                        <@p.text "${project.id}list5" "Creator: ${project.creator.username}"/>
                     </div>
                 </div>
             </div>

@@ -44,17 +44,22 @@
             <div class="col-4">
                 <div class="card my-2 shadow">
                     <div class="card-body">
-                        <a href="/intensive/${intensive.id}" style="color: inherit;"><h5 class="card-title">${intensive.name}</h5></a>
-                        <p class="card-text" style="max-height: 100px; overflow: hidden; text-overflow: ellipsis;">
-                            ${intensive.description}
+                        <a href="/intensive/${intensive.id}" style="color: inherit;"><h5 class="card-title"
+                                                                                         id="${intensive.id}list1">
+                                <@p.text "${intensive.id}list1" "${intensive.name}"/></h5></a>
+                        <p class="card-text" style="max-height: 100px; overflow: hidden; text-overflow: ellipsis;"
+                           id="${intensive.id}list2">
+                            <@p.text "${intensive.id}list2" "${intensive.description}"/>
                         </p>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Start: ${intensive.date_start}</li>
-                            <li class="list-group-item">End: ${intensive.date_end}</li>
+                            <li class="list-group-item"
+                                id="${intensive.id}list3"><@p.text "${intensive.id}list3" "Start: ${intensive.date_start}"/></li>
+                            <li class="list-group-item"
+                                id="${intensive.id}list4"><@p.text "${intensive.id}list4" "End: ${intensive.date_end}"/></li>
                         </ul>
                     </div>
-                    <div class="card-footer text-muted">
-                        Curator: ${intensive.curator.username}
+                    <div class="card-footer text-muted" id="${intensive.id}list5">
+                        <@p.text "${intensive.id}list5" "Curator: ${intensive.curator.username}"/>
                     </div>
                 </div>
             </div>

@@ -7,11 +7,13 @@
             <h1>Projects</h1>
         </div>
         <div class="col-lg-8">
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#newProjectModal"> New project </button>
+            <button type="button" class="btn btn-primary float-right"
+                    data-toggle="modal" data-target="#newProjectModal"> New project
+            </button>
         </div>
     </div>
-    <hr>
 
+    <hr>
     <!-- Project types -->
     <div class="btn-group btn-group-lg" role="group" aria-label="Button group for project by type searching" style="margin-bottom: 10px;">
         <a href="/project"> <button type="button" class="btn btn-light"> All </button> </a>
@@ -41,16 +43,22 @@
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card my-2 shadow" style="width: 18rem">
                     <div class="card-body">
-                        <a href="/project/${project.id}" style="color: inherit;"><h5 class="card-title">${project.name}</h5></a>
-                        <p class="card-text text-break" style="max-height: 150px; overflow: hidden; text-overflow: ellipsis;">
-                            ${project.description}
+                        <a href="/project/${project.id}" style="color: inherit;"><h5 class="card-title"
+                                                                                     id="${project.id}list1">
+                                <@p.text "${project.id}list1" "${project.name}"/></h5></a>
+                        <p class="card-text text-break"
+                           style="max-height: 150px; overflow: hidden; text-overflow: ellipsis;"
+                           id="${project.id}list2">
+                            <@p.text "${project.id}list2" "${project.description}"/>
                         </p>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">Date: ${project.date_created}</li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" id="${project.id}list3">
+                                <@p.text "${project.id}list3" "Date: ${project.date_created}"/></li>
+                            <li class="list-group-item" id="${project.id}list4">
                                 <#if !project.isIntensiveListEmpty()>
                                     <#list project.intensive_list as intensive>
-                                        <a href="/intensive/${intensive.id}" style="color: inherit;">${intensive.name}</a>
+                                        <a href="/intensive/${intensive.id}" style="color: inherit;">
+                                            <@p.text "${project.id}list4" "${intensive.name}"/></a>
                                     </#list>
                                 <#else>
                                     No intensives
@@ -58,8 +66,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="card-footer text-muted">
-                        Creator: ${project.creator.username}
+                    <div class="card-footer text-muted" id="${project.id}list5">
+                        <@p.text "${project.id}list5" "Creator: ${project.creator.username}"/>
                     </div>
                 </div>
             </div>

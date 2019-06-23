@@ -5,7 +5,7 @@
     <!-- Description of project top side -->
     <div class="row">
         <div class="col-lg-8">
-            <h1>${project.name}</h1>
+            <h1 id="1"><@p.text "1" "${project.name}"/></h1>
         </div>
         <div class="col-lg-4">
             <#if user_now.isModerator() || project.isCreator(user_now)>
@@ -19,19 +19,23 @@
 
     <!-- Description of project right side -->
     <div class="row">
-        <p class="col-lg-12">${project.description}</p>
+        <p class="col-lg-12" id="2"><@p.text "2" "${project.description}"/></p>
     </div>
 
     <div class="row">
         <div class="col-lg-9">
             <!-- Team -->
-            <i class="text-muted">Team:</i> <#list project.team as user> ${user.username}<#sep>, <#else> ... </#list>
+            <i class="text-muted">Team:</i> <#list project.team as user>
+                <a id="${user.id}list1"><@p.text "${user.id}list1" "${user.username}"/></a><#sep>, <#else> ... </#list>
         </div>
         <div class="col-lg-3 list-group list-group-flush">
-            <span class="list-group-item"><i class="text-muted">Created:</i> ${project.date_created}<br></span>
-            <span class="list-group-item"><i class="text-muted">Curator:</i> ${project.creator.username}<br></span>
+            <span class="list-group-item"><i class="text-muted">Created:</i>
+                <a id="3"><@p.text "3" "${project.date_created}"/></a><br></span>
+            <span class="list-group-item"><i class="text-muted">Curator:</i>
+                <a id="4"><@p.text "4" "${project.creator.username}"/></a><br></span>
             <span class="list-group-item"><i class="text-muted">Supervisor:</i>
-                <#if project.supervisor??>${project.supervisor.username}<#else>...</#if></span>
+                <#if project.supervisor??><a
+                        id="5"><@p.text "" "${project.supervisor.username}"/></a><#else>...</#if></span>
             <#if user_now.isCurator()>
                 <#list project.type as t>
                     <span class="list-group-item"><i class="text-muted">Type:</i> ${t}<br></span>
@@ -83,7 +87,7 @@
                 <select id="selectUser" name="username" class="custom-select">
                     <option selected>Choose...</option>
                     <#list team as user>
-                        <option>${user.username}</option>
+                        <option id="${user.id}list1"><@p.text "${user.id}list1" "${user.username}"/></option>
                     </#list>
                 </select>
             </form>
@@ -103,7 +107,7 @@
                 <select id="selectSupervisor" name="username" class="custom-select">
                     <option selected>Choose...</option>
                     <#list supervisors as user>
-                        <option>${user.username}</option>
+                        <option id="${user.id}list2"><@p.text "${user.id}list2" "${user.username}"/></option>
                     </#list>
                 </select>
             </form>
@@ -166,11 +170,12 @@
         <#list comments as comment>
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-lg-1">
-                        <i class="text-muted">${comment.creator.username}: </i>
+                    <div class="col-lg-1 mr-2">
+                        <i class="text-muted" id="${comment.id}list1">
+                            <@p.text "${comment.id}list1" "${comment.creator.username}: "/></i>
                     </div>
-                    <div class="col-lg-9">
-                        ${comment.text}
+                    <div class="col-lg-9" id="${comment.id}list2">
+                        <@p.text "${comment.id}list2" "${comment.text}"/>
                     </div>
                     <div class="col-lg-2 text-muted">
                         <i>${comment.date_created}</i>
