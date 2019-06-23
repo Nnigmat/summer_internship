@@ -1,15 +1,14 @@
 package com.d_command.letniy_intensiv.services;
 
-import com.d_command.letniy_intensiv.domain.Intensive;
-import com.d_command.letniy_intensiv.domain.Project;
-import com.d_command.letniy_intensiv.domain.ProjectType;
-import com.d_command.letniy_intensiv.domain.User;
+import com.d_command.letniy_intensiv.domain.*;
 import com.d_command.letniy_intensiv.repos.IntensiveRepo;
 import com.d_command.letniy_intensiv.repos.ProjectRepo;
+import com.d_command.letniy_intensiv.repos.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -19,6 +18,9 @@ public class IntensiveService {
 
     @Autowired
     private ProjectRepo projectRepo;
+
+    @Autowired
+    private TeamRepo teamRepo;
 
 
     public List<Intensive> findAll() {
@@ -35,11 +37,19 @@ public class IntensiveService {
 
     public void intensiveInfo(Intensive intensive, Model model) {
         model.addAttribute("intensive", intensive);
-        model.addAttribute("projects", intensive.getProject_list());
+
+        List<Team> teams = teamRepo.findByIntensive(intensive);
+        LinkedList<Project> projects = new LinkedList<>();
+        for (Team item : teams) {
+            projects.add(item.getProject());
+        }
+        model.addAttribute("projects", projects);
+
         List<Project> temp = projectRepo.findAll();
         List<Project> all_projects = projectRepo.findAll();
         for (Project project : temp) {
-            if (!project.getType().contains(ProjectType.ACCEPTED) || project.getIntensive_list().contains(intensive)) {
+            if (!project.getType().contains(ProjectType.ACCEPTED) ||
+                    teamRepo.findByProjectAndIntensive(project, intensive) != null) {
                 all_projects.remove(project);
             }
         }
@@ -48,8 +58,7 @@ public class IntensiveService {
     }
 
     public void addProject(Intensive intensive, String project) {
-        intensive.addProject(projectRepo.findByName(project));
-        intensiveRepo.save(intensive);
+        teamRepo.save(new Team(intensive, projectRepo.findByName(project)));
     }
 
     public void update(Intensive intensive, String name, String description, String date_start, String date_end) {

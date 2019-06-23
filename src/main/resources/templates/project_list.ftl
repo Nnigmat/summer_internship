@@ -54,16 +54,6 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" id="${project.id}list3">
                                 <@p.text "${project.id}list3" "Date: ${project.date_created}"/></li>
-                            <li class="list-group-item" id="${project.id}list4">
-                                <#if !project.isIntensiveListEmpty()>
-                                    <#list project.intensive_list as intensive>
-                                        <a href="/intensive/${intensive.id}" style="color: inherit;">
-                                            <@p.text "${project.id}list4" "${intensive.name}"/></a>
-                                    </#list>
-                                <#else>
-                                    No intensives
-                                </#if>
-                            </li>
                         </ul>
                     </div>
                     <div class="card-footer text-muted" id="${project.id}list5">

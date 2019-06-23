@@ -84,8 +84,9 @@
             <div class="col-4">
                 <div class="card my-2" style="width: 18rem;">
                     <div class="card-body">
-                        <a href="/project/${project.id}" style="color: inherit;"><h5 class="card-title"
-                                                                                     id="${project.id}list2">
+                        <a href="/intensive/${intensive.id}/project/${project.id}" style="color: inherit;"><h5
+                                    class="card-title"
+                                    id="${project.id}list2">
                                 <@p.text "${project.id}list2" "${project.name}"/></h5></a>
                         <p class="card-text" id="${project.id}list3">
                             <@p.text "${project.id}list3" "${project.description}"/>

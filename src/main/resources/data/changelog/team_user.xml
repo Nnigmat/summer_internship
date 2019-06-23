@@ -6,18 +6,18 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="1" author="nnigmat">
-        <createTable tableName="intensive_project">
-            <column name="intensive_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_intensive_project"
-                             references="intensive(id)"></constraints>
+        <createTable tableName="team_user">
+            <column name="team_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_team_user"
+                             references="team(id)"></constraints>
             </column>
-            <column name="project_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_project_intensive"
-                             references="project(id)"></constraints>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_user_team"
+                             references="usr(id)"></constraints>
             </column>
         </createTable>
 
-        <addPrimaryKey tableName="intensive_project" columnNames="intensive_id, project_id"></addPrimaryKey>
+        <addPrimaryKey tableName="team_user" columnNames="team_id, user_id"></addPrimaryKey>
     </changeSet>
 
 </databaseChangeLog>

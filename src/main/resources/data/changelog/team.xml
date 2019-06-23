@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="nnigmat">
+        <createTable tableName="team">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="intensive_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_intensive_project"
+                             references="intensive(id)"></constraints>
+            </column>
+            <column name="project_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_project_intensive"
+                             references="project(id)"></constraints>
+            </column>
+            <column name="supervisor_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_team_user"
+                             references="usr(id)"></constraints>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

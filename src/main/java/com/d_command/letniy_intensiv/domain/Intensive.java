@@ -1,7 +1,6 @@
 package com.d_command.letniy_intensiv.domain;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "intensive")
@@ -18,12 +17,6 @@ public class Intensive {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curator_id")
     private User curator;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "intensive_project",
-            joinColumns = @JoinColumn(name = "intensive_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"))
-    private Set<Project> project_list;
 
     public Intensive() {}
 
@@ -81,22 +74,6 @@ public class Intensive {
 
     public void setDate_end(String date_end) {
         this.date_end = date_end;
-    }
-
-    public Set<Project> getProject_list() {
-        return project_list;
-    }
-
-    public void setProject_list(Set<Project> project_list) {
-        this.project_list = project_list;
-    }
-
-    public void addProject(Project project) {
-        project_list.add(project);
-    }
-
-    public void deleteProject(Project project) {
-        project_list.remove(project);
     }
 
     public void update(String name, String description, String date_start, String date_end) {

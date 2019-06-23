@@ -10,10 +10,10 @@
     <include file="data/changelog/intensive.xml"></include>
     <include file="data/changelog/project.xml"></include>
     <include file="data/changelog/comment.xml"></include>
+    <include file="data/changelog/team.xml"></include>
 
     <!-- FK -->
-    <include file="data/changelog/intensive_project.xml"></include>
-    <include file="data/changelog/project_user.xml"></include>
+    <include file="data/changelog/team_user.xml"></include>
 
     <!-- Tags -->
     <include file="data/changelog/tag.xml"></include>

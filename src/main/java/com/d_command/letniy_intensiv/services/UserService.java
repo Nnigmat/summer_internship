@@ -1,9 +1,8 @@
 package com.d_command.letniy_intensiv.services;
 
-import com.d_command.letniy_intensiv.domain.Project;
 import com.d_command.letniy_intensiv.domain.Role;
 import com.d_command.letniy_intensiv.domain.User;
-import com.d_command.letniy_intensiv.repos.ProjectRepo;
+import com.d_command.letniy_intensiv.repos.TeamRepo;
 import com.d_command.letniy_intensiv.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +20,7 @@ public class UserService implements UserDetailsService {
     private UserRepo userRepo;
 
     @Autowired
-    private ProjectRepo projectRepo;
+    private TeamRepo teamRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -67,16 +66,9 @@ public class UserService implements UserDetailsService {
 
     public void profileInfo(User user, Model model) {
         if (user.isCurator()) {
-            List<Project> projects = projectRepo.findAll();
-            List<Project> temp = projectRepo.findAll();
-            for (Project item : temp) {
-                if (item.getSupervisor() == null || item.getSupervisor().getId() != user.getId()) {
-                    projects.remove(item);
-                }
-            }
-            model.addAttribute("projects", projects);
+            model.addAttribute("projects", teamRepo.findBySupervisor(user));
         } else {
-            model.addAttribute("projects", user.getProject_list());
+            model.addAttribute("projects", user.getProject_intensive_list());
         }
     }
 }

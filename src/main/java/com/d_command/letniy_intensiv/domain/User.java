@@ -20,8 +20,8 @@ public class User implements UserDetails {
     private String surname;
     private boolean active;
 
-    @ManyToMany(mappedBy = "team", fetch = FetchType.EAGER)
-    private Set<Project> project_list;
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
+    private Set<Team> project_intensive_list;
 
     @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     private Set<Project> createdProjects;
@@ -62,6 +62,7 @@ public class User implements UserDetails {
         return getRoles();
     }
 
+    //--------------------------------------------------------------------------------------------
     public String getPassword() {
         return password;
     }
@@ -102,12 +103,12 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public Set<Project> getProject_list() {
-        return project_list;
+    public Set<Team> getProject_intensive_list() {
+        return project_intensive_list;
     }
 
-    public void setProject_list(Set<Project> project_list) {
-        this.project_list = project_list;
+    public void setProject_intensive_list(Set<Team> project_intensive_list) {
+        this.project_intensive_list = project_intensive_list;
     }
 
     public String getName() {
@@ -126,6 +127,15 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
+    public Set<Project> getCreatedProjects() {
+        return createdProjects;
+    }
+
+    public void setCreatedProjects(Set<Project> createdProjects) {
+        this.createdProjects = createdProjects;
+    }
+
+    //--------------------------------------------------------------------------------------------
     public boolean isCurator() {
         return roles.contains(Role.CURATOR);
     }
@@ -159,14 +169,6 @@ public class User implements UserDetails {
         if (surname != "") {
             this.surname = surname;
         }
-    }
-
-    public Set<Project> getCreatedProjects() {
-        return createdProjects;
-    }
-
-    public void setCreatedProjects(Set<Project> createdProjects) {
-        this.createdProjects = createdProjects;
     }
 
     //

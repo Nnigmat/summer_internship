@@ -34,11 +34,12 @@
             <tbody>
             <#list users as user>
                 <!-- Mark users with authorities -->
-                <#assign containsAdmin = false containsMod = false containsCurator = false>
+                <#assign containsAdmin = false containsMod = false containsCurator = false containsBan = false>
                 <#list user.roles as role>
                     <#if role.toString() == "ADMIN"><#assign containsAdmin = true></#if>
                     <#if role.toString() == "MODERATOR"><#assign containsMod = true></#if>
                     <#if role.toString() == "CURATOR"><#assign containsCurator = true></#if>
+                    <#if role.toString() == "BAN"><#assign containsBan = true></#if>
                 </#list>
                 <#if containsAdmin>
                     <tr class="table-danger">
@@ -54,16 +55,30 @@
                     </#if>
                 </#if>
                 <!-- Body -->
-                <td>${user.username}</td>
+                <td id="${user.id}list1"><@p.text "${user.id}list1" "${user.username}"/></td>
                 <td>
                     <#list user.roles as role>
                         ${role}<#sep>;
                     </#list>
                 </td>
                 <#if !containsAdmin>
-                    <td><a href="/user/${user.id}/mod">Moderator</a></td>
-                    <td><a href="/user/${user.id}/cur">Curator</a></td>
-                    <td><a href="/user/${user.id}/ban">Ban</a></td>
+                    <#if !containsMod>
+                        <td><a href="/user/${user.id}/mod">Make mod</a></td>
+                    <#else>
+                        <td><a href="/user/${user.id}/mod">Unmod</a></td>
+                    </#if>
+
+                    <#if !containsCurator>
+                        <td><a href="/user/${user.id}/cur">Make curator</a></td>
+                    <#else>
+                        <td><a href="/user/${user.id}/cur">Uncurate xD</a></td>
+                    </#if>
+
+                    <#if !containsBan>
+                        <td><a href="/user/${user.id}/ban">Ban this mf</a></td>
+                    <#else>
+                        <td><a href="/user/${user.id}/ban">Unban</a></td>
+                    </#if>
                 <#else>
                     <td>Can't</td>
                     <td>touch</td>

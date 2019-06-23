@@ -75,9 +75,9 @@
                                 <li class="list-group-item list-group-item-action active">Curator of projects</li>
                             </#if>
                             <#list projects as project>
-                                <a href="/project/${project.id}" class="list-group-item list-group-item-action"
-                                   id="${project.id}list2">
-                                    <@p.text "${project.id}list2" "${project.name}"/>
+                                <a href="/intensive/${project.intensive.id}/project/${project.project.id}"
+                                   class="list-group-item list-group-item-action" id="${project.id}list2">
+                                    <@p.text "${project.id}list2" "${project.intensive.name}: ${project.project.name}"/>
                                 </a>
                             </#list>
                         </div>

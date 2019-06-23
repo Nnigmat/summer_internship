@@ -20,19 +20,6 @@ public class Project {
     @JoinColumn(name = "creator_id")
     private User creator;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "project_user",
-            joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-    private Set<User> team;
-
-    @ManyToMany(mappedBy = "project_list", fetch = FetchType.EAGER)
-    private Set<Intensive> intensive_list;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "supervisor_id")
-    private User supervisor;
-
     @ElementCollection(targetClass = ProjectType.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "project_type", joinColumns = @JoinColumn(name = "project_id"))
     @Enumerated(EnumType.STRING)
@@ -88,42 +75,6 @@ public class Project {
         this.date_created = date_created;
     }
 
-    public Set<Intensive> getIntensive_list() {
-        return intensive_list;
-    }
-
-    public void setIntensive_list(Set<Intensive> intensive_list) {
-        this.intensive_list = intensive_list;
-    }
-
-    public boolean isIntensiveListEmpty() {
-        return intensive_list.isEmpty();
-    }
-
-    public void addIntensive(Intensive intensive) {
-        intensive_list.add(intensive);
-    }
-
-    public void deleteIntensive(Intensive intensive) {
-        intensive_list.remove(intensive);
-    }
-
-    public Set<User> getTeam() {
-        return team;
-    }
-
-    public void setTeam(Set<User> team) {
-        this.team = team;
-    }
-
-    public User getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(User supervisor) {
-        this.supervisor = supervisor;
-    }
-
     public void update(String name, String description) {
         if (!name.isEmpty()) {
             this.name = name;
@@ -132,10 +83,6 @@ public class Project {
         if (!description.isEmpty()) {
             this.description = description;
         }
-    }
-
-    public void addUser(User user) {
-        this.team.add(user);
     }
 
     public Set<ProjectType> getType() {
