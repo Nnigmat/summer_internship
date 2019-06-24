@@ -23,5 +23,7 @@
     <!-- Project types -->
     <include file="data/changelog/project_type.xml"></include>
 
+    <!-- UUID -->
+    <include file="data/changelog/uuid.xml"></include>
 
 </databaseChangeLog>
