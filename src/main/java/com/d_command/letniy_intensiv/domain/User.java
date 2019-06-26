@@ -18,6 +18,7 @@ public class User implements UserDetails {
     private String password;
     private String name;
     private String surname;
+    private String avatar;
     private boolean active;
 
     @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
@@ -133,6 +134,14 @@ public class User implements UserDetails {
 
     public void setCreatedProjects(Set<Project> createdProjects) {
         this.createdProjects = createdProjects;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     //--------------------------------------------------------------------------------------------

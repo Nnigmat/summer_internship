@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/profile")
@@ -30,6 +33,16 @@ public class ProfileController {
                                @RequestParam String name, @RequestParam String surname,
                                @AuthenticationPrincipal User user) {
         userService.update(user, username, password, name, surname);
+
+        return "redirect:/profile";
+    }
+
+    //    Supported file extensions: JPEG.; GIF, including animated GIFs.; PNG.; APNG.; SVG.; BMP.; BMP ICO.; PNG ICO.
+//    Maximum file size is 1.048.576 bytes
+    @PostMapping("/upload")
+    public String upload_image(@RequestParam MultipartFile file,
+                               @AuthenticationPrincipal User user) throws IOException {
+        userService.updateImage(user, file);
 
         return "redirect:/profile";
     }

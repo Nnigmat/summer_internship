@@ -82,4 +82,12 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="5" author="nnigmat">
+        <addColumn tableName="usr">
+            <column name="avatar" type="varchar(128)">
+                <constraints nullable="true"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>
