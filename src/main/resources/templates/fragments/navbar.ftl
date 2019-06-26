@@ -1,5 +1,3 @@
-<#include "security.ftl">
-
 <nav class="navbar navbar-expand-lg navbar-light bg-info mb-3">
     <!-- Main page -->
     <#if title == "Home page">

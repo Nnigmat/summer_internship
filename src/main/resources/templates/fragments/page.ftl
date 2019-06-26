@@ -1,3 +1,5 @@
+<#include "security.ftl">
+
 <#macro page title>
     <!DOCTYPE html>
     <html lang="en">
@@ -13,7 +15,9 @@
               crossorigin="anonymous">
     </head>
     <body>
-    <#include "navbar.ftl">
+    <#if known>
+        <#include "navbar.ftl">
+    </#if>
     <div class="container mt-3">
         <#nested>
     </div>

@@ -35,12 +35,10 @@
             <#list users as user>
                 <!-- Mark users with authorities -->
                 <#assign containsAdmin = false containsMod = false containsCurator = false containsBan = false>
-                <#list user.roles as role>
-                    <#if role.toString() == "ADMIN"><#assign containsAdmin = true></#if>
-                    <#if role.toString() == "MODERATOR"><#assign containsMod = true></#if>
-                    <#if role.toString() == "CURATOR"><#assign containsCurator = true></#if>
-                    <#if role.toString() == "BAN"><#assign containsBan = true></#if>
-                </#list>
+                <#if user.role == "ADMIN"><#assign containsAdmin = true></#if>
+                <#if user.role == "MODERATOR"><#assign containsMod = true></#if>
+                <#if user.role == "CURATOR"><#assign containsCurator = true></#if>
+                <#if user.role == "BAN"><#assign containsBan = true></#if>
                 <#if containsAdmin>
                     <tr class="table-danger">
                 <#else>
@@ -57,9 +55,7 @@
                 <!-- Body -->
                 <td id="${user.id}list1"><@p.text "${user.id}list1" "${user.username}"/></td>
                 <td>
-                    <#list user.roles as role>
-                        ${role}<#sep>;
-                    </#list>
+                    ${user.role}
                 </td>
                 <#if !containsAdmin>
                     <#if !containsMod>
@@ -89,4 +85,16 @@
             </tbody>
         </table>
     </#if>
+
+    <form method="post" action="/user/update_link">
+        <div class="row my-4">
+            <div class="col-10">
+                http://localhost:8080/registration/${uuid}
+            </div>
+            <div class="col-2">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </form>
 </@p.page>
