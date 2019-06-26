@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -31,12 +32,37 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-//
+
 //    @OneToMany
 //    @JoinTable(name = "user_tags", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 //    private Set<String> tags;
 
     public User() {}
+
+    public User(String username, String password, String name, String surname) {
+        this.username = username;
+
+        if (!password.equals("")) {
+            this.password = password;
+        } else {
+            this.password = "123";
+        }
+
+        if (!name.equals("")) {
+            this.name = name;
+        } else {
+            this.name = "none";
+        }
+
+        if (!surname.equals("")) {
+            this.surname = surname;
+        } else {
+            this.surname = "none";
+        }
+
+        this.roles = Collections.singleton(Role.USER);
+        this.active = true;
+    }
 
     @Override
     public boolean isAccountNonExpired() {

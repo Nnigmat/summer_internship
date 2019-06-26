@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="mt-4">
+    <div class="my-4">
         <form method="post" action="/profile/upload" id="profile" enctype="multipart/form-data">
             <input name="file" type="file">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>

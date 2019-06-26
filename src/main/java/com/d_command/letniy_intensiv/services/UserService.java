@@ -40,6 +40,12 @@ public class UserService implements UserDetailsService {
         return userRepo.findAll();
     }
 
+    public void create(String username, String password, String name, String surname) {
+        if (userRepo.findByUsername(username) == null && !username.equals("")) {
+            userRepo.save(new User(username, password, name, surname));
+        }
+    }
+
     public void searchUser(String username, Model model) {
         if (username.equals("")) {
             model.addAttribute("users", userRepo.findAll());
