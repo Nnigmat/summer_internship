@@ -1,5 +1,7 @@
 package com.d_command.letniy_intensiv.services;
 
+import com.d_command.letniy_intensiv.DTO.UserSearchDTO;
+import com.d_command.letniy_intensiv.ModelMapper.UserMapper;
 import com.d_command.letniy_intensiv.domain.RegID;
 import com.d_command.letniy_intensiv.domain.Role;
 import com.d_command.letniy_intensiv.domain.User;
@@ -51,16 +53,20 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void searchUser(String username, Model model) {
+    public LinkedList<UserSearchDTO> searchUser(String username) {
         if (username.equals("")) {
-            model.addAttribute("users", userRepo.findAll());
+            return UserMapper.userToUserSearchDTO(userRepo.findAll());
         } else {
             if (userRepo.findByUsername(username) != null) {
                 LinkedList<User> temp = new LinkedList<>();
                 temp.add(userRepo.findByUsername(username));
-                model.addAttribute("users", temp);
+                return UserMapper.userToUserSearchDTO(temp);
             } else {
-                model.addAttribute("error", "Such user doesn't exist");
+                LinkedList<UserSearchDTO> usersDTO = new LinkedList<>();
+                UserSearchDTO temp = new UserSearchDTO();
+                temp.setError("Such user doesn't exist");
+                usersDTO.add(temp);
+                return usersDTO;
             }
         }
     }
