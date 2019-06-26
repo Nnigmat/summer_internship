@@ -1,7 +1,9 @@
 package com.d_command.letniy_intensiv.services;
 
+import com.d_command.letniy_intensiv.domain.RegID;
 import com.d_command.letniy_intensiv.domain.Role;
 import com.d_command.letniy_intensiv.domain.User;
+import com.d_command.letniy_intensiv.repos.RegIDRepo;
 import com.d_command.letniy_intensiv.repos.TeamRepo;
 import com.d_command.letniy_intensiv.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private TeamRepo teamRepo;
+
+    @Autowired
+    private RegIDRepo idRepo;
 
     @Value("${upload.path}")
     private String upload_path;
@@ -107,11 +112,20 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public void updateLink() {
+        idRepo.delete(idRepo.findAll().get(0));
+        idRepo.save(new RegID());
+    }
+
     public void profileInfo(User user, Model model) {
         if (user.isCurator()) {
             model.addAttribute("projects", teamRepo.findBySupervisor(user));
         } else {
             model.addAttribute("projects", user.getProject_intensive_list());
         }
+    }
+
+    public UUID getInvLink() {
+        return idRepo.findAll().get(0).getId();
     }
 }

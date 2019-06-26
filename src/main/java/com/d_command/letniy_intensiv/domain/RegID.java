@@ -12,6 +12,7 @@ public class RegID {
     private UUID id;
 
     public RegID() {
+        id = UUID.randomUUID();
     }
 
     public UUID getId() {

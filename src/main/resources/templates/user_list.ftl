@@ -89,4 +89,16 @@
             </tbody>
         </table>
     </#if>
+
+    <form method="post" action="/user/update_link">
+        <div class="row my-4">
+            <div class="col-10">
+                ${uuid}
+            </div>
+            <div class="col-2">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </form>
 </@p.page>

@@ -20,6 +20,7 @@ public class UserController {
     public String user_list(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("user_now", user);
+        model.addAttribute("uuid", userService.getInvLink());
 
         return "user_list";
     }
@@ -54,6 +55,13 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String ban_user(@PathVariable User user) {
         userService.changeAuthority(user, Role.BAN);
+
+        return "redirect:/user";
+    }
+
+    @PostMapping("/update_link")
+    public String update_link() {
+        userService.updateLink();
 
         return "redirect:/user";
     }
