@@ -14,6 +14,7 @@
 
     <!-- FK -->
     <include file="data/changelog/team_user.xml"></include>
+    <include file="data/changelog/user_likes.xml"></include>
 
     <!-- Tags -->
     <include file="data/changelog/tag.xml"></include>

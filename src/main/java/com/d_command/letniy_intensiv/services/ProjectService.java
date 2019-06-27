@@ -134,4 +134,11 @@ public class ProjectService {
     public void delete(Project project) {
         projectRepo.delete(project);
     }
+
+    public void upvote(Project project, User user) {
+        if (!project.getWho_liked().contains(userRepo.findByUsername(user.getUsername()))) {
+            project.addLike(user);
+            projectRepo.save(project);
+        }
+    }
 }

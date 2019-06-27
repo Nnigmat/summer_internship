@@ -24,6 +24,8 @@
 
     <div class="row">
         <div class="col-lg-9">
+            <i class="text-muted">Who liked:</i> <#list project.who_liked as user>
+                <a id="${user.id}list0"><@p.text "${user.id}list0" "${user.username}"/></a><#sep>, <#else> ... </#list>
         </div>
         <div class="col-lg-3 list-group list-group-flush">
             <span class="list-group-item"><i class="text-muted">Created:</i>

@@ -53,7 +53,7 @@
             <div class="row">
 
                 <!-- Projects user created -->
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="list-group list-group-flush shadow">
                        <span class="list-group-item active">Suggested projects</span>
                         <#list user_now.getCreatedProjects() as project>
@@ -65,9 +65,22 @@
                     </div>
                 </div>
 
+                <!-- Projects user liked -->
+                <div class="col-lg-4">
+                    <div class="list-group list-group-flush shadow">
+                        <span class="list-group-item active">Liked projects</span>
+                        <#list user_now.liked_projects as project>
+                            <a href="/project/${project.id}" class="list-group-item list-group-item-action"
+                               id="${project.id}list0">
+                                <@p.text "${project.id}list0" "${project.name}"/>
+                            </a>
+                        </#list>
+                    </div>
+                </div>
+
                 <!-- Projects user is a part of a team -->
                 <#if user_now.isCurator() || user_now.isUser()>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="list-group list-group-flush shadow">
                             <#if !user_now.isCurator()>
                                 <li class="list-group-item list-group-item-action active">Participated in projects</li>

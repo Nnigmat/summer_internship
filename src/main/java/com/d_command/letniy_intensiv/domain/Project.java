@@ -16,6 +16,12 @@ public class Project {
     private String description;
     private String date_created;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_likes",
+            joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> who_liked;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
@@ -75,6 +81,14 @@ public class Project {
         this.date_created = date_created;
     }
 
+    public Set<User> getWho_liked() {
+        return who_liked;
+    }
+
+    public void setWho_liked(Set<User> who_liked) {
+        this.who_liked = who_liked;
+    }
+
     public void update(String name, String description) {
         if (!name.isEmpty()) {
             this.name = name;
@@ -95,5 +109,13 @@ public class Project {
 
     public boolean isCreator(User user) {
         return this.getCreator().getId().equals(user.getId());
+    }
+
+    public void addLike(User user) {
+        this.who_liked.add(user);
+    }
+
+    public int like_amount() {
+        return this.who_liked.size();
     }
 }

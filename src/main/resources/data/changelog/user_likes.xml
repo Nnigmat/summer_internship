@@ -8,10 +8,10 @@
     <changeSet id="1" author="nnigmat">
         <createTable tableName="user_likes">
             <column name="user_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_user_account" references="usr(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_user_like" references="usr(id)"></constraints>
             </column>
             <column name="project_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_project_account" references="project(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_project_like" references="project(id)"></constraints>
             </column>
         </createTable>
         <addPrimaryKey tableName="user_likes" columnNames="user_id, project_id"></addPrimaryKey>

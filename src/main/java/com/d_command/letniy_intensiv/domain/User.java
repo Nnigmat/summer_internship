@@ -25,6 +25,9 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "participants", fetch = FetchType.EAGER)
     private Set<Team> project_intensive_list;
 
+    @ManyToMany(mappedBy = "who_liked", fetch = FetchType.EAGER)
+    private Set<Project> liked_projects;
+
     @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     private Set<Project> createdProjects;
 
@@ -168,6 +171,14 @@ public class User implements UserDetails {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Set<Project> getLiked_projects() {
+        return liked_projects;
+    }
+
+    public void setLiked_projects(Set<Project> liked_projects) {
+        this.liked_projects = liked_projects;
     }
 
     //--------------------------------------------------------------------------------------------

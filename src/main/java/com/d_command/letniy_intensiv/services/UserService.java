@@ -103,7 +103,7 @@ public class UserService implements UserDetailsService {
                 //error type
                 return;
             }
-            if (file.getSize() > 1000000) {
+            if (file.getSize() > 5000000) {
                 //error size
                 return;
             }

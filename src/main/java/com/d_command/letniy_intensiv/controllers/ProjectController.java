@@ -117,4 +117,11 @@ public class ProjectController {
 
         return "redirect:/project";
     }
+
+    @GetMapping("/project/{project}/like")
+    public String like_project(@PathVariable Project project, @AuthenticationPrincipal User user) {
+        projectService.upvote(project, user);
+
+        return "redirect:/project";
+    }
 }

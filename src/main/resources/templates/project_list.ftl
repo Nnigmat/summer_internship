@@ -54,6 +54,10 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item" id="${project.id}list3">
                                 <@p.text "${project.id}list3" "Date: ${project.date_created}"/></li>
+                            <li class="list-group-item">
+                                ${project.like_amount()}
+                                <a href="/project/${project.id}/like">Like</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="card-footer text-muted" id="${project.id}list5">

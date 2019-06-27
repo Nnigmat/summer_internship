@@ -38,7 +38,7 @@ public class ProfileController {
     }
 
     //    Supported file extensions: JPEG.; GIF, including animated GIFs.; PNG.; APNG.; SVG.; BMP.; BMP ICO.; PNG ICO.
-//    Maximum file size is 1.048.576 bytes
+//    Maximum file size is ~5MB
     @PostMapping("/upload")
     public String upload_image(@RequestParam MultipartFile file,
                                @AuthenticationPrincipal User user) throws IOException {
