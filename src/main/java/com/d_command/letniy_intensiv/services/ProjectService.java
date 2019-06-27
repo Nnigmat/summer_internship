@@ -1,10 +1,7 @@
 package com.d_command.letniy_intensiv.services;
 
 import com.d_command.letniy_intensiv.domain.*;
-import com.d_command.letniy_intensiv.repos.CommentRepo;
-import com.d_command.letniy_intensiv.repos.ProjectRepo;
-import com.d_command.letniy_intensiv.repos.TeamRepo;
-import com.d_command.letniy_intensiv.repos.UserRepo;
+import com.d_command.letniy_intensiv.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -24,6 +21,9 @@ public class ProjectService {
 
     @Autowired
     private TeamRepo teamRepo;
+
+    @Autowired
+    private TagProjectRepo tagRepo;
 
     public void findByType(ProjectType type, Model model) {
         Iterable<Project> projects = null;
@@ -71,6 +71,7 @@ public class ProjectService {
             model.addAttribute("isEmptyTeam", team.isEmpty());
         }
 
+        model.addAttribute("tags", tagRepo.findAll());
         model.addAttribute("types", ProjectType.values());
 
         List<Comment> project_comments = commentRepo.findAll();
@@ -140,5 +141,10 @@ public class ProjectService {
             project.addLike(user);
             projectRepo.save(project);
         }
+    }
+
+    public void addTag(String tag, Project project) {
+        project.addTag(tagRepo.findByText(tag));
+        projectRepo.save(project);
     }
 }

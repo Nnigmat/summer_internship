@@ -6,6 +6,7 @@ import com.d_command.letniy_intensiv.domain.RegID;
 import com.d_command.letniy_intensiv.domain.Role;
 import com.d_command.letniy_intensiv.domain.User;
 import com.d_command.letniy_intensiv.repos.RegIDRepo;
+import com.d_command.letniy_intensiv.repos.TagUserRepo;
 import com.d_command.letniy_intensiv.repos.TeamRepo;
 import com.d_command.letniy_intensiv.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,13 @@ public class UserService implements UserDetailsService {
 
     private final UserRepo userRepo;
     private final TeamRepo teamRepo;
+    private final TagUserRepo tagRepo;
 
     @Autowired
-    public UserService(UserRepo userRepo, TeamRepo teamRepo) {
+    public UserService(UserRepo userRepo, TeamRepo teamRepo, TagUserRepo tagRepo) {
         this.userRepo = userRepo;
         this.teamRepo = teamRepo;
+        this.tagRepo = tagRepo;
     }
 
     @Autowired
@@ -109,7 +112,7 @@ public class UserService implements UserDetailsService {
                 //error type
                 return;
             }
-            if (file.getSize() > 5000000) {
+            if (file.getSize() > 1048576) {
                 //error size
                 return;
             }
@@ -135,9 +138,15 @@ public class UserService implements UserDetailsService {
         } else {
             model.addAttribute("projects", user.getProject_intensive_list());
         }
+        model.addAttribute("tags", tagRepo.findAll());
     }
 
     public UUID getInvLink() {
         return idRepo.findAll().get(0).getId();
+    }
+
+    public void addTag(String tag, User user) {
+        user.addTag(tagRepo.findByText(tag));
+        userRepo.save(user);
     }
 }

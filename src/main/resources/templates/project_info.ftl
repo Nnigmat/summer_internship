@@ -27,6 +27,13 @@
             <i class="text-muted">Who liked:</i> <#list project.who_liked as user>
                 <a id="${user.id}list0"><@p.text "${user.id}list0" "${user.username}"/></a><#sep>, <#else> ... </#list>
         </div>
+        <div class="col-lg-9">
+            <i class="text-muted">Tags:</i>
+            <#list project.tags as tag>
+                #${tag.text}
+                <#sep>; <#else> No tags
+            </#list>
+        </div>
         <div class="col-lg-3 list-group list-group-flush">
             <span class="list-group-item"><i class="text-muted">Created:</i>
                 <a id="3"><@p.text "3" "${project.date_created}"/></a><br></span>
@@ -52,6 +59,11 @@
             <div class="col">
                 <button type="button" class="btn btn-primary"
                         data-toggle="modal" data-target="#deleteProject">Delete
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary"
+                        data-toggle="modal" data-target="#addTag">Add tag
                 </button>
             </div>
         </div>
@@ -98,6 +110,23 @@
         </form>
     </@m.modal>
 
+    <@m.modal "addTag" "tag" "Add" "Add tag to this project">
+        <div class="input-group mb3">
+            <form method="post" action="/project/${project.id}/tag" id="tag" class="form-inline">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="selectType">Tags</label>
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <select id="selectType" name="tag" class="custom-select">
+                    <option selected>Choose...</option>
+                    <#list tags as tag>
+                        <option>${tag.text}</option>
+                    </#list>
+                </select>
+            </form>
+        </div>
+    </@m.modal>
+
     <!-- Send comment -->
     <form method="post" action="/project/${project.id}/comment" class="row">
         <div class="col-lg-10">
@@ -114,14 +143,14 @@
         <#list comments as comment>
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-lg-1 mr-2">
+                    <div class="col-lg-2 mr-2">
                         <i class="text-muted" id="${comment.id}list1">
                             <@p.text "${comment.id}list1" "${comment.creator.username}: "/></i>
                     </div>
-                    <div class="col-lg-9" id="${comment.id}list2">
+                    <div class="col-lg-7" id="${comment.id}list2">
                         <@p.text "${comment.id}list2" "${comment.text}"/>
                     </div>
-                    <div class="col-lg-2 text-muted">
+                    <div class="col-lg-3 text-muted">
                         <i>${comment.date_created}</i>
                     </div>
                 </div>

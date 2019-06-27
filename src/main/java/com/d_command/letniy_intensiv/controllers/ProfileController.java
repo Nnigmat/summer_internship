@@ -38,11 +38,18 @@ public class ProfileController {
     }
 
     //    Supported file extensions: JPEG.; GIF, including animated GIFs.; PNG.; APNG.; SVG.; BMP.; BMP ICO.; PNG ICO.
-//    Maximum file size is ~5MB
+//    Maximum file size is 1MB
     @PostMapping("/upload")
     public String upload_image(@RequestParam MultipartFile file,
                                @AuthenticationPrincipal User user) throws IOException {
         userService.updateImage(user, file);
+
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/tag")
+    public String add_tag(@RequestParam String tag, @AuthenticationPrincipal User user) {
+        userService.addTag(tag, user);
 
         return "redirect:/profile";
     }

@@ -1,0 +1,47 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="nnigmat">
+        <createTable tableName="tag_for_user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"></constraints>
+            </column>
+            <column name="text" type="varchar(128)">
+                <constraints nullable="false"></constraints>
+            </column>
+        </createTable>
+
+        <insert tableName="tag_for_user">
+            <column name="id" value="-1"></column>
+            <column name="text" value="Java developer"></column>
+        </insert>
+        <insert tableName="tag_for_user">
+            <column name="id" value="-2"></column>
+            <column name="text" value="C# developer"></column>
+        </insert>
+        <insert tableName="tag_for_user">
+            <column name="id" value="-3"></column>
+            <column name="text" value="Java tester"></column>
+        </insert>
+        <insert tableName="tag_for_user">
+            <column name="id" value="-4"></column>
+            <column name="text" value="Spring backend"></column>
+        </insert>
+        <insert tableName="tag_for_user">
+            <column name="id" value="-5"></column>
+            <column name="text" value="Frontend"></column>
+        </insert>
+        <insert tableName="tag_for_user">
+            <column name="id" value="-6"></column>
+            <column name="text" value="Lazarus developer"></column>
+        </insert>
+        <insert tableName="tag_for_user">
+            <column name="id" value="-7"></column>
+            <column name="text" value="Project manager"></column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

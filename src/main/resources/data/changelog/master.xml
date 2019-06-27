@@ -11,18 +11,14 @@
     <include file="data/changelog/project.xml"></include>
     <include file="data/changelog/comment.xml"></include>
     <include file="data/changelog/team.xml"></include>
+    <include file="data/changelog/tag_for_project.xml"></include>
+    <include file="data/changelog/tag_for_user.xml"></include>
 
     <!-- FK -->
     <include file="data/changelog/team_user.xml"></include>
     <include file="data/changelog/user_likes.xml"></include>
-
-    <!-- Tags -->
-    <include file="data/changelog/tag.xml"></include>
-    <include file="data/changelog/project_tags.xml"></include>
     <include file="data/changelog/user_tags.xml"></include>
-
-    <!-- Project types -->
-    <include file="data/changelog/project_type.xml"></include>
+    <include file="data/changelog/project_tags.xml"></include>
 
     <!-- UUID -->
     <include file="data/changelog/uuid.xml"></include>

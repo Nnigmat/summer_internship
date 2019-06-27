@@ -124,4 +124,12 @@ public class ProjectController {
 
         return "redirect:/project";
     }
+
+    @PostMapping("/project/{project}/tag")
+    @PreAuthorize("hasAuthority('CURATOR')")
+    public String add_tag(@PathVariable Project project, @RequestParam String tag) {
+        projectService.addTag(tag, project);
+
+        return "redirect:/project/{project}";
+    }
 }

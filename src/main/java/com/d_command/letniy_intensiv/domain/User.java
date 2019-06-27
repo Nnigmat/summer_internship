@@ -28,6 +28,12 @@ public class User implements UserDetails {
     @ManyToMany(mappedBy = "who_liked", fetch = FetchType.EAGER)
     private Set<Project> liked_projects;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_tags",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private Set<TagUser> tags;
+
     @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     private Set<Project> createdProjects;
 
@@ -181,6 +187,14 @@ public class User implements UserDetails {
         this.liked_projects = liked_projects;
     }
 
+    public Set<TagUser> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<TagUser> tags) {
+        this.tags = tags;
+    }
+
     //--------------------------------------------------------------------------------------------
     public boolean isCurator() {
         return roles.contains(Role.CURATOR);
@@ -215,6 +229,10 @@ public class User implements UserDetails {
         if (surname != "") {
             this.surname = surname;
         }
+    }
+
+    public void addTag(TagUser tag) {
+        this.tags.add(tag);
     }
 
     //

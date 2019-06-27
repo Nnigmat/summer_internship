@@ -13,7 +13,7 @@
             <column name="text" type="varchar(1024)">
                 <constraints nullable="false"></constraints>
             </column>
-            <column name="date_created" type="varchar(64)">
+            <column name="date_created" type="timestamp">
                 <constraints nullable="false"></constraints>
             </column>
             <column name="creator_id" type="bigint">

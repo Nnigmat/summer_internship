@@ -7,24 +7,6 @@
 
     <changeSet id="1" author="sanya">
         <createTable tableName="uuid">
-            <column name="id" type="bigint" defaultValue="88005553535">
-                <constraints primaryKey="true" nullable="false"></constraints>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="2" author="sanya">
-        <insert tableName="uuid">
-            <column name="id" value="88555"></column>
-        </insert>
-    </changeSet>
-
-    <changeSet id="3" author="anime">
-        <dropTable tableName="uuid"></dropTable>
-    </changeSet>
-
-    <changeSet id="4" author="anime">
-        <createTable tableName="uuid">
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"></constraints>
             </column>

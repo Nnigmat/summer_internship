@@ -53,11 +53,6 @@
                         data-toggle="modal" data-target="#addUserModal">Add user
                 </button>
             </div>
-            <div class="col">
-                <button type="button" class="btn btn-primary"
-                        data-toggle="modal" data-target="#changeType">Change type
-                </button>
-            </div>
         </div>
     </#if>
 
@@ -104,24 +99,6 @@
         </div>
     </@m.modal>
 
-    <@m.modal "changeType" "type" "Change" "Change type of this project">
-        <div class="input-group mb3">
-            <form method="post" action="/intensive/${intensive.id}/project/${project.id}/type" id="type"
-                  class="form-inline">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="selectType">Types</label>
-                </div>
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <select id="selectType" name="type" class="custom-select">
-                    <option selected>Choose...</option>
-                    <#list types as type>
-                        <option>${type}</option>
-                    </#list>
-                </select>
-            </form>
-        </div>
-    </@m.modal>
-
     <!-- Send comment -->
     <form method="post" action="/intensive/${intensive.id}/project/${project.id}/comment" class="row">
         <div class="col-lg-10">
@@ -138,14 +115,14 @@
         <#list comments as comment>
             <li class="list-group-item">
                 <div class="row">
-                    <div class="col-lg-1 mr-2">
+                    <div class="col-lg-2 mr-2">
                         <i class="text-muted" id="${comment.id}list1">
                             <@p.text "${comment.id}list1" "${comment.creator.username}: "/></i>
                     </div>
-                    <div class="col-lg-9" id="${comment.id}list2">
+                    <div class="col-lg-7" id="${comment.id}list2">
                         <@p.text "${comment.id}list2" "${comment.text}"/>
                     </div>
-                    <div class="col-lg-2 text-muted">
+                    <div class="col-lg-3 text-muted">
                         <i>${comment.date_created}</i>
                     </div>
                 </div>

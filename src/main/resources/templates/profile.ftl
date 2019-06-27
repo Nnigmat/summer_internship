@@ -56,7 +56,7 @@
                 <div class="col-lg-4">
                     <div class="list-group list-group-flush shadow">
                        <span class="list-group-item active">Suggested projects</span>
-                        <#list user_now.getCreatedProjects() as project>
+                        <#list user_now.createdProjects as project>
                             <a href="/project/${project.id}" class="list-group-item list-group-item-action"
                                id="${project.id}list1">
                                 <@p.text "${project.id}list1" "${project.name}"/>
@@ -109,8 +109,35 @@
     </div>
     <div>
         <#if user_now.avatar??>
-            <img src="/image/${user_now.avatar}">
-            <p>${user_now.avatar}</p>
+            <div style="overflow: hidden; max-height: 500px; max-width: 500px">
+                <img src="/image/${user_now.avatar}">
+            </div>
         </#if>
     </div>
+    <div>
+        <#list user_now.tags as tag>
+            #${tag.text}
+            <#sep>; <#else> No tags
+        </#list>
+    </div>
+    <button type="button" class="btn btn-primary"
+            data-toggle="modal" data-target="#addTag">Add tag
+    </button>
+
+    <@m.modal "addTag" "tag" "Add" "Add tag to this project">
+        <div class="input-group mb3">
+            <form method="post" action="/profile/tag" id="tag" class="form-inline">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="selectType">Tags</label>
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <select id="selectType" name="tag" class="custom-select">
+                    <option selected>Choose...</option>
+                    <#list tags as tag>
+                        <option>${tag.text}</option>
+                    </#list>
+                </select>
+            </form>
+        </div>
+    </@m.modal>
 </@p.page>

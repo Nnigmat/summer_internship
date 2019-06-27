@@ -1,6 +1,7 @@
 package com.d_command.letniy_intensiv.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "intensive")
@@ -11,8 +12,8 @@ public class Intensive {
 
     private String name;
     private String description;
-    private String date_start;
-    private String date_end;
+    private LocalDate date_start;
+    private LocalDate date_end;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curator_id")
@@ -23,8 +24,16 @@ public class Intensive {
     public Intensive(String name, String description, String date_end, String date_start, User user) {
         this.name = name;
         this.description = description;
-        this.date_start = date_start;
-        this.date_end = date_end;
+        try {
+            this.date_start = LocalDate.parse(date_start);
+        } catch (Exception e) {
+            this.date_start = LocalDate.now();
+        }
+        try {
+            this.date_end = LocalDate.parse(date_end);
+        } catch (Exception e) {
+            this.date_start = LocalDate.now();
+        }
         this.curator = user;
     }
 
@@ -60,19 +69,19 @@ public class Intensive {
         this.curator = curator;
     }
 
-    public String getDate_start() {
+    public LocalDate getDate_start() {
         return date_start;
     }
 
-    public void setDate_start(String date_start) {
+    public void setDate_start(LocalDate date_start) {
         this.date_start = date_start;
     }
 
-    public String getDate_end() {
+    public LocalDate getDate_end() {
         return date_end;
     }
 
-    public void setDate_end(String date_end) {
+    public void setDate_end(LocalDate date_end) {
         this.date_end = date_end;
     }
 
@@ -84,10 +93,18 @@ public class Intensive {
             this.description = description;
         }
         if (!date_start.isEmpty()) {
-            this.date_start = date_start;
+            try {
+                this.date_start = LocalDate.parse(date_start);
+            } catch (Exception e) {
+                this.date_start = LocalDate.now();
+            }
         }
         if (!date_end.isEmpty()) {
-            this.date_end = date_end;
+            try {
+                this.date_end = LocalDate.parse(date_end);
+            } catch (Exception e) {
+                this.date_end = LocalDate.now();
+            }
         }
     }
 }

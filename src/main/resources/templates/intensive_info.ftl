@@ -47,11 +47,11 @@
                 <textarea class="form-control" name="description"></textarea>
             </div>
             <div class="form-group">
-                <label for="description" class="col-form-label">Date of start:</label>
+                <label for="description" class="col-form-label">Date of start (YYYY-MM-DD):</label>
                 <input class="form-control" name="date_start"></input>
             </div>
             <div class="form-group">
-                <label for="description" class="col-form-label">Date of end:</label>
+                <label for="description" class="col-form-label">Date of end (YYYY-MM-DD):</label>
                 <input class="form-control" name="date_end"></input>
             </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>

@@ -8,10 +8,10 @@
     <changeSet id="1" author="nnigmat">
         <createTable tableName="user_tags">
             <column name="user_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_user_account" references="usr(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_tag_user" references="usr(id)"></constraints>
             </column>
             <column name="tag_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_tag_account" references="tag(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_user_tag" references="tag_for_user(id)"></constraints>
             </column>
         </createTable>
 
