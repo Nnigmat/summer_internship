@@ -25,11 +25,15 @@ import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
-    @Autowired
-    private UserRepo userRepo;
+
+    private final UserRepo userRepo;
+    private final TeamRepo teamRepo;
 
     @Autowired
-    private TeamRepo teamRepo;
+    public UserService(UserRepo userRepo, TeamRepo teamRepo) {
+        this.userRepo = userRepo;
+        this.teamRepo = teamRepo;
+    }
 
     @Autowired
     private RegIDRepo idRepo;
@@ -41,6 +45,8 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return (UserDetails) userRepo.findByUsername(username);
     }
+
+    public User findByUsername(String username) { return userRepo.findByUsername(username); }
 
 
     public List<User> findAll() {

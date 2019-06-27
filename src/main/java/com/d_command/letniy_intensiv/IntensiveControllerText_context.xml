@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+
+    <!-- this bean will be injected into the OrderServiceTest class -->
+    <bean id="intensiveService" class="com.d_command.letniy_intensiv.services.IntensiveService">
+    <!-- set properties, etc. -->
+    </bean>
+
+        <!-- other beans -->
+
+</beans>

@@ -5,30 +5,37 @@ import com.d_command.letniy_intensiv.repos.IntensiveRepo;
 import com.d_command.letniy_intensiv.repos.ProjectRepo;
 import com.d_command.letniy_intensiv.repos.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.transaction.Transactional;
 import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@Transactional
 public class IntensiveService {
-    @Autowired
-    private IntensiveRepo intensiveRepo;
+    private final IntensiveRepo intensiveRepo;
+    private final ProjectRepo projectRepo;
+    private final TeamRepo teamRepo;
 
     @Autowired
-    private ProjectRepo projectRepo;
-
-    @Autowired
-    private TeamRepo teamRepo;
-
+    public IntensiveService(IntensiveRepo intensiveRepo, ProjectRepo projectRepo, TeamRepo teamRepo) {
+        this.intensiveRepo = intensiveRepo;
+        this.projectRepo = projectRepo;
+        this.teamRepo = teamRepo;
+    }
 
     public List<Intensive> findAll() {
         return intensiveRepo.findAll();
     }
 
+    public List<Intensive> findByName(String name) { return intensiveRepo.findByName(name); }
+
     public void create(String name, String description, String date_end, String date_start, User user) {
-        if (name == "") {
+        if (name == null || name.isEmpty()) {
             //error msg, but i'm lazy
         } else {
             intensiveRepo.save(new Intensive(name, description, date_end, date_start, user));
@@ -66,4 +73,11 @@ public class IntensiveService {
 
         intensiveRepo.save(intensive);
     }
+
+    public void removeAll(List<Intensive> intensives) {
+        for (Intensive inten: intensives) {
+            intensiveRepo.delete(inten);
+        }
+    }
+
 }
