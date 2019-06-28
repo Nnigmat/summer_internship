@@ -20,6 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String user_list(Model model, @AuthenticationPrincipal User user) {
         LinkedList<UserSearchDTO> users = userService.searchUser("");
         model.addAttribute("users", users);

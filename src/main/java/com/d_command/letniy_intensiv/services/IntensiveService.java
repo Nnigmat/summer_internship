@@ -5,14 +5,19 @@ import com.d_command.letniy_intensiv.repos.IntensiveRepo;
 import com.d_command.letniy_intensiv.repos.ProjectRepo;
 import com.d_command.letniy_intensiv.repos.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -27,6 +32,9 @@ public class IntensiveService {
         this.projectRepo = projectRepo;
         this.teamRepo = teamRepo;
     }
+
+    @Value("${upload.path}")
+    private String upload_path;
 
     public List<Intensive> findAll() {
         return intensiveRepo.findAll();
@@ -80,4 +88,26 @@ public class IntensiveService {
         }
     }
 
+    public void uploadFile(Intensive intensive, User user, MultipartFile file) throws IOException {
+        if (file != null) {
+            String name = file.getOriginalFilename();
+            if (name.equals("")) {
+                //error empty
+                return;
+            }
+            if (file.getSize() > 10485760) {
+                //error size
+                return;
+            }
+            File folder = new File(upload_path);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+            String filename = UUID.randomUUID().toString() + file.getOriginalFilename();
+            file.transferTo(new File(upload_path + "\\" + filename));
+            intensive.addFile(filename);
+            System.out.println(intensive.getFiles()[0]);
+            intensiveRepo.save(intensive);
+        }
+    }
 }

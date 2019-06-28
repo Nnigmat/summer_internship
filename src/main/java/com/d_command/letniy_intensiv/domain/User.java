@@ -235,6 +235,17 @@ public class User implements UserDetails {
         this.tags.add(tag);
     }
 
+    public boolean containsTag(String tag) {
+        boolean flag = false;
+        for (TagUser item : tags) {
+            if (item.getText().equals(tag)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+
     //
 //    public Set<String> getTags() {
 //        return tags;

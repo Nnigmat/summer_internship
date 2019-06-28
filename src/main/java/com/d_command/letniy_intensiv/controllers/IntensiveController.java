@@ -9,6 +9,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/intensive")
@@ -57,6 +60,14 @@ public class IntensiveController {
     public String editIntensive(@PathVariable Intensive intensive, @RequestParam String name,
                                 @RequestParam String description, @RequestParam String date_start, @RequestParam String date_end) {
         intensiveService.update(intensive, name, description, date_start, date_end);
+
+        return "redirect:/intensive/{intensive}";
+    }
+
+    @PostMapping("/{intensive}/upload")
+    public String upload_file(@RequestParam MultipartFile file, @PathVariable Intensive intensive,
+                              @AuthenticationPrincipal User user) throws IOException {
+        intensiveService.uploadFile(intensive, user, file);
 
         return "redirect:/intensive/{intensive}";
     }

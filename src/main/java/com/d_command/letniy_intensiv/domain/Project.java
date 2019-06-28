@@ -136,4 +136,15 @@ public class Project {
     public void addTag(TagProject tag) {
         this.tags.add(tag);
     }
+
+    public boolean containsTag(String tag) {
+        boolean flag = false;
+        for (TagProject item : tags) {
+            if (item.getText().equals(tag)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
 }

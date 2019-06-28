@@ -20,7 +20,17 @@
         </div>
         <div class="col-lg-3">
             <i>Dates:</i> <a id="3"><@p.text "3" "${intensive.date_start} - ${intensive.date_end}"/></a><br>
-            <i>Curator:</i> <a id="5"><@p.text "4" "${intensive.curator.username}"/></a>
+            <i>Curator:</i> <a id="4"><@p.text "4" "${intensive.curator.username}"/></a>
+        </div>
+        <div class="col-lg-9">
+            <i class="text-muted">Files:</i>
+            <#if intensive.files??>
+                <#list intensive.files as file>
+                    <a href="/image/${file}" download="${intensive.file_name(file)}" id="${file}list-1">
+                        <@p.text "${file}list-1" "${intensive.file_name(file)}"/></a>
+                    <#sep>; <#else> No files
+                </#list>
+            <#else>No files</#if>
         </div>
     </div>
 
@@ -32,6 +42,13 @@
                         data-toggle="modal" data-target="#addProject">Add project
                 </button>
             </div>
+        </div>
+        <div class="my-4">
+            <form method="post" action="/intensive/${intensive.id}/upload" enctype="multipart/form-data">
+                <input name="file" type="file">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button class="btn btn-primary" type="submit">Upload</button>
+            </form>
         </div>
     </#if>
 

@@ -145,8 +145,10 @@ public class ProjectService {
     }
 
     public void addTag(String tag, Project project) {
-        project.addTag(tagRepo.findByText(tag));
-        projectRepo.save(project);
+        if (!project.containsTag(tag)) {
+            project.addTag(tagRepo.findByText(tag));
+            projectRepo.save(project);
+        }
     }
 
     public void searchProject(String name, Model model) {

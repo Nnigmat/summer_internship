@@ -136,7 +136,7 @@ public class UserService implements UserDetailsService {
             while (name.contains(".")) {
                 name = name.substring(name.indexOf(".") + 1);
             }
-            if (name.equals("png") && name.equals("jpeg")) {
+            if (!name.equals("png") && !name.equals("jpeg") && !name.equals("jpg")) {
                 //error type
                 return;
             }
@@ -174,7 +174,10 @@ public class UserService implements UserDetailsService {
     }
 
     public void addTag(String tag, User user) {
-        user.addTag(tagRepo.findByText(tag));
-        userRepo.save(user);
+        if (!user.containsTag(tag)) {
+            ;
+            user.addTag(tagRepo.findByText(tag));
+            userRepo.save(user);
+        }
     }
 }

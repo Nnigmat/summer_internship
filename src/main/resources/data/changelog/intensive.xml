@@ -45,4 +45,30 @@ Everyone, get in here! Everyone, get in here! Everyone, get in here! Everyone, g
             <column name="date_end" value="2019-07-14"></column>
         </insert>
     </changeSet>
+
+    <changeSet id="2" author="anime">
+        <addColumn tableName="intensive">
+            <column name="files" type="varchar(1024)">
+                <constraints nullable="true"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="3" author="anime">
+        <dropColumn tableName="intensive" columnName="files"></dropColumn>
+        <addColumn tableName="intensive">
+            <column name="files" type="text[]">
+                <constraints nullable="true"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="4" author="anime">
+        <dropColumn tableName="intensive" columnName="files"></dropColumn>
+        <addColumn tableName="intensive">
+            <column name="files" type="bytea">
+                <constraints nullable="true"></constraints>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

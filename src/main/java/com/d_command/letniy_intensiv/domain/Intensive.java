@@ -2,6 +2,7 @@ package com.d_command.letniy_intensiv.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.LinkedList;
 
 @Entity
 @Table(name = "intensive")
@@ -14,6 +15,7 @@ public class Intensive {
     private String description;
     private LocalDate date_start;
     private LocalDate date_end;
+    private String[] files;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "curator_id")
@@ -85,6 +87,14 @@ public class Intensive {
         this.date_end = date_end;
     }
 
+    public String[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(String[] files) {
+        this.files = files;
+    }
+
     public void update(String name, String description, String date_start, String date_end) {
         if (!name.isEmpty()) {
             this.name = name;
@@ -106,5 +116,25 @@ public class Intensive {
                 this.date_end = LocalDate.now();
             }
         }
+    }
+
+    public void addFile(String filename) {
+        int size;
+        if (files == null) {
+            size = 0;
+        } else {
+            size = files.length;
+        }
+        String[] temp = new String[size + 1];
+        int i;
+        for (i = 0; i < size; i++) {
+            temp[i] = files[i];
+        }
+        temp[i] = filename;
+        this.files = temp;
+    }
+
+    public String file_name(String text) {
+        return text.substring(36);
     }
 }
