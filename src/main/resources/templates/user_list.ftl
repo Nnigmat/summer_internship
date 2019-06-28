@@ -7,7 +7,7 @@
     <form method="post" action="/user">
         <div class="row my-4">
             <div class="col-10">
-                <input type="text" class="form-control" placeholder="User's name" name="username">
+                <input type="text" class="form-control" placeholder="User's name/tag" name="username">
             </div>
             <div class="col-2">
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -146,5 +147,39 @@ public class ProjectService {
     public void addTag(String tag, Project project) {
         project.addTag(tagRepo.findByText(tag));
         projectRepo.save(project);
+    }
+
+    public void searchProject(String name, Model model) {
+        model.addAttribute("search", true);
+        if (name.charAt(0) == '#') {
+            if (tagRepo.findByText(name.substring(1)) == null) {
+                model.addAttribute("error", "Such tag doesn't exist");
+                return;
+            } else {
+                List<Project> projects = projectRepo.findAll();
+                List<Project> temp = projectRepo.findAll();
+                for (Project item : temp) {
+                    if (!item.getTags().contains(tagRepo.findByText(name.substring(1)))) {
+                        projects.remove(item);
+                    }
+                }
+                if (projects.isEmpty()) {
+                    model.addAttribute("error", "Projects with such tag don't exist");
+                    return;
+                } else {
+                    model.addAttribute("projects", projects);
+                }
+            }
+        } else {
+            if (projectRepo.findByName(name) != null) {
+                LinkedList<Project> temp = new LinkedList<>();
+                temp.add(projectRepo.findByName(name));
+                model.addAttribute("projects", temp);
+                return;
+            } else {
+                model.addAttribute("error", "Such project doesn't exist");
+                return;
+            }
+        }
     }
 }

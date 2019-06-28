@@ -4,6 +4,7 @@ import com.d_command.letniy_intensiv.DTO.UserSearchDTO;
 import com.d_command.letniy_intensiv.ModelMapper.UserMapper;
 import com.d_command.letniy_intensiv.domain.RegID;
 import com.d_command.letniy_intensiv.domain.Role;
+import com.d_command.letniy_intensiv.domain.TagUser;
 import com.d_command.letniy_intensiv.domain.User;
 import com.d_command.letniy_intensiv.repos.RegIDRepo;
 import com.d_command.letniy_intensiv.repos.TagUserRepo;
@@ -66,16 +67,43 @@ public class UserService implements UserDetailsService {
         if (username.equals("")) {
             return UserMapper.userToUserSearchDTO(userRepo.findAll());
         } else {
-            if (userRepo.findByUsername(username) != null) {
-                LinkedList<User> temp = new LinkedList<>();
-                temp.add(userRepo.findByUsername(username));
-                return UserMapper.userToUserSearchDTO(temp);
+            if (username.charAt(0) == '#') {
+                if (tagRepo.findByText(username.substring(1)) == null) {
+                    LinkedList<UserSearchDTO> usersDTO = new LinkedList<>();
+                    UserSearchDTO temp = new UserSearchDTO();
+                    temp.setError("Such tag doesn't exist");
+                    usersDTO.add(temp);
+                    return usersDTO;
+                } else {
+                    List<User> users = userRepo.findAll();
+                    List<User> temp = userRepo.findAll();
+                    for (User item : temp) {
+                        if (!item.getTags().contains(tagRepo.findByText(username.substring(1)))) {
+                            users.remove(item);
+                        }
+                    }
+                    if (users.isEmpty()) {
+                        LinkedList<UserSearchDTO> usersDTO = new LinkedList<>();
+                        UserSearchDTO temp2 = new UserSearchDTO();
+                        temp2.setError("No users with such tag");
+                        usersDTO.add(temp2);
+                        return usersDTO;
+                    } else {
+                        return UserMapper.userToUserSearchDTO(users);
+                    }
+                }
             } else {
-                LinkedList<UserSearchDTO> usersDTO = new LinkedList<>();
-                UserSearchDTO temp = new UserSearchDTO();
-                temp.setError("Such user doesn't exist");
-                usersDTO.add(temp);
-                return usersDTO;
+                if (userRepo.findByUsername(username) != null) {
+                    LinkedList<User> temp = new LinkedList<>();
+                    temp.add(userRepo.findByUsername(username));
+                    return UserMapper.userToUserSearchDTO(temp);
+                } else {
+                    LinkedList<UserSearchDTO> usersDTO = new LinkedList<>();
+                    UserSearchDTO temp = new UserSearchDTO();
+                    temp.setError("Such user doesn't exist");
+                    usersDTO.add(temp);
+                    return usersDTO;
+                }
             }
         }
     }

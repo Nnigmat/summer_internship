@@ -10,7 +10,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ProjectController {
@@ -131,5 +134,18 @@ public class ProjectController {
         projectService.addTag(tag, project);
 
         return "redirect:/project/{project}";
+    }
+
+    @PostMapping("/project/search")
+    public String search_project(@RequestParam String name, Model model,
+                                 @AuthenticationPrincipal User user) {
+        if (name.equals("")) {
+            return "redirect:/project";
+        } else {
+            projectService.searchProject(name, model);
+            model.addAttribute("user_now", user);
+
+            return "project_list";
+        }
     }
 }
