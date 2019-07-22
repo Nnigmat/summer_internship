@@ -1,3 +1,5 @@
+<#include "security.ftl">
+
 <#macro page title>
     <!DOCTYPE html>
     <html lang="en">
@@ -13,8 +15,10 @@
               crossorigin="anonymous">
     </head>
     <body>
-    <#include "navbar.ftl">
-    <div class="container" mt-4>
+    <#if known>
+        <#include "navbar.ftl">
+    </#if>
+    <div class="container mt-3">
         <#nested>
     </div>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -31,16 +35,8 @@
     </html>
 </#macro>
 
-<#macro collapse button action>
-    <div class="col-4">
-        <a class="btn btn-primary my-4" data-toggle="collapse" href="#${action}" role="button" aria-expanded="false"
-           aria-controls="${action}">
-            ${button}
-        </a>
-    </div>
-    <div class="collapse my-2" , id="${action}">
-        <div class="form-group">
-            <#nested>
-        </div>
-    </div>
+<#macro text id value>
+    <script>
+        document.getElementById("${id}").textContent = "${value}";
+    </script>
 </#macro>

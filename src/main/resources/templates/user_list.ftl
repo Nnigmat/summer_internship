@@ -7,7 +7,7 @@
     <form method="post" action="/user">
         <div class="row my-4">
             <div class="col-10">
-                <input type="text" class="form-control" placeholder="User's name" name="username">
+                <input type="text" class="form-control" placeholder="User's name/tag" name="username">
             </div>
             <div class="col-2">
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
@@ -34,12 +34,11 @@
             <tbody>
             <#list users as user>
                 <!-- Mark users with authorities -->
-                <#assign containsAdmin = false containsMod = false containsCurator = false>
-                <#list user.roles as role>
-                    <#if role.toString() == "ADMIN"><#assign containsAdmin = true></#if>
-                    <#if role.toString() == "MODERATOR"><#assign containsMod = true></#if>
-                    <#if role.toString() == "CURATOR"><#assign containsCurator = true></#if>
-                </#list>
+                <#assign containsAdmin = false containsMod = false containsCurator = false containsBan = false>
+                <#if user.role == "ADMIN"><#assign containsAdmin = true></#if>
+                <#if user.role == "MODERATOR"><#assign containsMod = true></#if>
+                <#if user.role == "CURATOR"><#assign containsCurator = true></#if>
+                <#if user.role == "BAN"><#assign containsBan = true></#if>
                 <#if containsAdmin>
                     <tr class="table-danger">
                 <#else>
@@ -54,16 +53,28 @@
                     </#if>
                 </#if>
                 <!-- Body -->
-                <td>${user.username}</td>
+                <td id="${user.id}list1"><@p.text "${user.id}list1" "${user.username}"/></td>
                 <td>
-                    <#list user.roles as role>
-                        ${role}<#sep>;
-                    </#list>
+                    ${user.role}
                 </td>
                 <#if !containsAdmin>
-                    <td><a href="/user/${user.id}/mod">Moderator</a></td>
-                    <td><a href="/user/${user.id}/cur">Curator</a></td>
-                    <td><a href="/user/${user.id}/ban">Ban</a></td>
+                    <#if !containsMod>
+                        <td><a href="/user/${user.id}/mod">Make mod</a></td>
+                    <#else>
+                        <td><a href="/user/${user.id}/mod">Unmod</a></td>
+                    </#if>
+
+                    <#if !containsCurator>
+                        <td><a href="/user/${user.id}/cur">Make curator</a></td>
+                    <#else>
+                        <td><a href="/user/${user.id}/cur">Uncurate xD</a></td>
+                    </#if>
+
+                    <#if !containsBan>
+                        <td><a href="/user/${user.id}/ban">Ban this mf</a></td>
+                    <#else>
+                        <td><a href="/user/${user.id}/ban">Unban</a></td>
+                    </#if>
                 <#else>
                     <td>Can't</td>
                     <td>touch</td>
@@ -74,4 +85,16 @@
             </tbody>
         </table>
     </#if>
+
+    <form method="post" action="/user/update_link">
+        <div class="row my-4">
+            <div class="col-10">
+                http://localhost:8080/registration/${uuid}
+            </div>
+            <div class="col-2">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </form>
 </@p.page>

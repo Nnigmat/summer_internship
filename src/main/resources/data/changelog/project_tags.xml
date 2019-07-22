@@ -8,10 +8,11 @@
     <changeSet id="1" author="nnigmat">
         <createTable tableName="project_tags">
             <column name="project_id"  type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_project_account" references="project(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_tag_project" references="project(id)"></constraints>
             </column>
             <column name="tag_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_tag_account" references="tag(id)"></constraints>
+                <constraints nullable="false" foreignKeyName="fk_project_tag"
+                             references="tag_for_project(id)"></constraints>
             </column>
         </createTable>
         <addPrimaryKey tableName="project_tags" columnNames="project_id, tag_id"></addPrimaryKey>

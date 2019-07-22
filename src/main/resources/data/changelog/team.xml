@@ -6,22 +6,21 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="1" author="nnigmat">
-        <createTable tableName="comment">
+        <createTable tableName="team">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"></constraints>
             </column>
-            <column name="text" type="varchar(1024)">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="date_created" type="timestamp">
-                <constraints nullable="false"></constraints>
-            </column>
-            <column name="creator_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_comment_creator" references="usr(id)"></constraints>
+            <column name="intensive_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_intensive_project"
+                             references="intensive(id)"></constraints>
             </column>
             <column name="project_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_comment_project"
+                <constraints nullable="false" foreignKeyName="fk_project_intensive"
                              references="project(id)"></constraints>
+            </column>
+            <column name="supervisor_id" type="bigint">
+                <constraints nullable="true" foreignKeyName="fk_team_user"
+                             references="usr(id)"></constraints>
             </column>
         </createTable>
     </changeSet>

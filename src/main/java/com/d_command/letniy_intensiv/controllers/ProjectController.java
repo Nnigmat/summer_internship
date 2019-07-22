@@ -1,110 +1,151 @@
 package com.d_command.letniy_intensiv.controllers;
 
-import com.d_command.letniy_intensiv.domain.Comment;
+import com.d_command.letniy_intensiv.domain.Intensive;
 import com.d_command.letniy_intensiv.domain.Project;
 import com.d_command.letniy_intensiv.domain.ProjectType;
 import com.d_command.letniy_intensiv.domain.User;
-import com.d_command.letniy_intensiv.repos.CommentRepo;
-import com.d_command.letniy_intensiv.repos.ProjectRepo;
-import com.d_command.letniy_intensiv.repos.UserRepo;
+import com.d_command.letniy_intensiv.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.LinkedList;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/project")
 public class ProjectController {
     @Autowired
-    private ProjectRepo projectRepo;
+    private ProjectService projectService;
 
-    @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
-    private CommentRepo commentRepo;
-
-    @GetMapping
-    public String project_list(Model model, @AuthenticationPrincipal User user, @RequestParam(required = false) ProjectType type) {
-        Iterable<Project> projects = null;
-        if (type != null) {
-            projects = projectRepo.findByType(type);
-        }
-        if (projects == null) {
-            projects = projectRepo.findAll();
-        }
-
-        model.addAttribute("projects", projects);
+    @GetMapping("/project")
+    public String project_list(Model model, @AuthenticationPrincipal User user,
+                               @RequestParam(required = false) ProjectType type) {
+        projectService.findByType(type, model);
         model.addAttribute("user_now", user);
 
         return "project_list";
     }
 
-    @PostMapping
+    @PostMapping("/project")
     public String create_project(@RequestParam String name, @RequestParam String description,
                                  @AuthenticationPrincipal User user) {
-        projectRepo.save(new Project(name, description, user));
+        projectService.create(name, description, user);
 
         return "redirect:/project";
     }
 
-    @GetMapping("/{project}")
+    @GetMapping("/project/{project}")
     public String project_info(Model model, @AuthenticationPrincipal User user,
                                @PathVariable Project project) {
-        model.addAttribute("project", project);
+        projectService.projectInfo(project, null, model);
         model.addAttribute("user_now", user);
-        model.addAttribute("all_users", userRepo.findAll());
-
-        List<Comment> project_comments = commentRepo.findAll();
-        List<Comment> temp = commentRepo.findAll();
-        for (Comment comment : project_comments) {
-            if (comment.getProject().getId() != project.getId()) {
-                temp.remove(comment);
-            }
-        }
-        model.addAttribute("comments", temp);
 
         return "project_info";
     }
 
-    @PostMapping("/{project}/edit")
+    @GetMapping("/intensive/{intensive}/project/{project}")
+    public String project_info_in_intensive(Model model, @AuthenticationPrincipal User user,
+                                            @PathVariable Project project, @PathVariable Intensive intensive) {
+        projectService.projectInfo(project, intensive, model);
+        model.addAttribute("user_now", user);
+
+        return "project_intensive_info";
+    }
+
+    @PostMapping("/project/{project}/edit")
     public String project_edit(@PathVariable Project project, @RequestParam String name,
                                @RequestParam String description, @AuthenticationPrincipal User user) {
-        if (user.isModerator() || project.isCreator(user)) {
-            project.update(name, description);
-            projectRepo.save(project);
-        }
+        projectService.update(project, name, description, user);
         return "redirect:/project/" + project.getId();
     }
 
-    @PostMapping("/{project}/add")
+    @PostMapping("/intensive/{intensive}/project/{project}/add")
     @PreAuthorize("hasAuthority('CURATOR')")
-    public String project_add_user(@PathVariable Project project, @RequestParam String username) {
-        project.addUser(userRepo.findByUsername(username));
-        projectRepo.save(project);
+    public String project_add_user(@PathVariable Project project, @RequestParam String username,
+                                   @PathVariable Intensive intensive) {
+        projectService.addParticipant(project, intensive, username);
 
-        return "redirect:/project/{project}";
+        return "redirect:/intensive/{intensive}/project/{project}";
     }
 
-    @PostMapping("/{project}/comment")
+    @PostMapping("/project/{project}/comment")
     public String add_comment(@PathVariable Project project, @RequestParam String text,
                               @AuthenticationPrincipal User user) {
-        commentRepo.save(new Comment(project, text, user));
+        projectService.addComment(project, text, user);
 
         return "redirect:/project/{project}";
     }
 
-    @PostMapping("/{project}/supervisor")
+    @PostMapping("/intensive/{intensive}/project/{project}/comment")
+    public String add_comment(@PathVariable Project project, @RequestParam String text,
+                              @AuthenticationPrincipal User user, @PathVariable Intensive intensive) {
+        projectService.addComment(project, text, user);
+
+        return "redirect:/intensive/{intensive}/project/{project}";
+    }
+
+    @PostMapping("/intensive/{intensive}/project/{project}/supervisor")
     @PreAuthorize("hasAuthority('CURATOR')")
-    public String add_supervisor(@PathVariable Project project, @RequestParam String username) {
-        project.update(userRepo.findByUsername(username));
-        projectRepo.save(project);
+    public String add_supervisor(@PathVariable Project project, @RequestParam String supervisor,
+                                 @PathVariable Intensive intensive) {
+        projectService.addSupervisor(project, intensive, supervisor);
+
+        return "redirect:/intensive/{intensive}/project/{project}";
+    }
+
+    @PostMapping("/project/{project}/type")
+    @PreAuthorize("hasAuthority('CURATOR')")
+    public String change_type(@PathVariable Project project, @RequestParam String type) {
+        projectService.changeType(project, type);
 
         return "redirect:/project/{project}";
+    }
+
+    @PostMapping("/intensive/{intensive}/project/{project}/type")
+    @PreAuthorize("hasAuthority('CURATOR')")
+    public String change_type(@PathVariable Project project, @RequestParam String type,
+                              @PathVariable Intensive intensive) {
+        projectService.changeType(project, type);
+
+        return "redirect:/intensive/{intensive}/project/{project}";
+    }
+
+    @PostMapping("/project/{project}/delete")
+    @PreAuthorize("hasAuthority('CURATOR')")
+    public String delete_project(@PathVariable Project project) {
+        projectService.delete(project);
+
+        return "redirect:/project";
+    }
+
+    @GetMapping("/project/{project}/like")
+    public String like_project(@PathVariable Project project, @AuthenticationPrincipal User user) {
+        projectService.upvote(project, user);
+
+        return "redirect:/project";
+    }
+
+    @PostMapping("/project/{project}/tag")
+    @PreAuthorize("hasAuthority('CURATOR')")
+    public String add_tag(@PathVariable Project project, @RequestParam String tag) {
+        projectService.addTag(tag, project);
+
+        return "redirect:/project/{project}";
+    }
+
+    @PostMapping("/project/search")
+    public String search_project(@RequestParam String name, Model model,
+                                 @AuthenticationPrincipal User user) {
+        if (name.equals("")) {
+            return "redirect:/project";
+        } else {
+            projectService.searchProject(name, model);
+            model.addAttribute("user_now", user);
+
+            return "project_list";
+        }
     }
 }

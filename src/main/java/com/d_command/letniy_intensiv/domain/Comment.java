@@ -1,7 +1,7 @@
 package com.d_command.letniy_intensiv.domain;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comment")
@@ -11,7 +11,7 @@ public class Comment {
     private Long id;
 
     private String text;
-    private String date_created;
+    private LocalDateTime date_created;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
@@ -28,7 +28,7 @@ public class Comment {
         this.project = project;
         this.creator = user;
         this.text = text;
-        this.date_created = LocalDate.now().toString();
+        this.date_created = LocalDateTime.now();
     }
 
     public Long getId() {
@@ -47,11 +47,11 @@ public class Comment {
         this.text = text;
     }
 
-    public String getDate_created() {
+    public LocalDateTime getDate_created() {
         return date_created;
     }
 
-    public void setDate_created(String date_created) {
+    public void setDate_created(LocalDateTime date_created) {
         this.date_created = date_created;
     }
 

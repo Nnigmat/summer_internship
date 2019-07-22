@@ -14,24 +14,23 @@ public class Project {
 
     private String name;
     private String description;
-    private String date_created;
+    private LocalDate date_created;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_likes",
+            joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    private Set<User> who_liked;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "project_tags",
+            joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private Set<TagProject> tags;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "creator_id")
     private User creator;
-
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "project_user",
-            joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-    private Set<User> team;
-
-    @ManyToMany(mappedBy = "project_list", fetch = FetchType.EAGER)
-    private Set<Intensive> intensive_list;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "supervisor_id")
-    private User supervisor;
 
     @ElementCollection(targetClass = ProjectType.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "project_type", joinColumns = @JoinColumn(name = "project_id"))
@@ -44,7 +43,7 @@ public class Project {
         this.name = name;
         this.description = description;
         this.creator = user;
-        this.date_created = LocalDate.now().toString();
+        this.date_created = LocalDate.now();
         this.type = new HashSet<ProjectType>() {{ add(ProjectType.NEW);}};
     }
 
@@ -80,48 +79,28 @@ public class Project {
         this.creator = creator;
     }
 
-    public String getDate_created() {
+    public LocalDate getDate_created() {
         return date_created;
     }
 
-    public void setDate_created(String date_created) {
+    public void setDate_created(LocalDate date_created) {
         this.date_created = date_created;
     }
 
-    public Set<Intensive> getIntensive_list() {
-        return intensive_list;
+    public Set<User> getWho_liked() {
+        return who_liked;
     }
 
-    public void setIntensive_list(Set<Intensive> intensive_list) {
-        this.intensive_list = intensive_list;
+    public void setWho_liked(Set<User> who_liked) {
+        this.who_liked = who_liked;
     }
 
-    public boolean isIntensiveListEmpty() {
-        return intensive_list.isEmpty();
+    public Set<TagProject> getTags() {
+        return tags;
     }
 
-    public void addIntensive(Intensive intensive) {
-        intensive_list.add(intensive);
-    }
-
-    public void deleteIntensive(Intensive intensive) {
-        intensive_list.remove(intensive);
-    }
-
-    public Set<User> getTeam() {
-        return team;
-    }
-
-    public void setTeam(Set<User> team) {
-        this.team = team;
-    }
-
-    public User getSupervisor() {
-        return supervisor;
-    }
-
-    public void setSupervisor(User supervisor) {
-        this.supervisor = supervisor;
+    public void setTags(Set<TagProject> tags) {
+        this.tags = tags;
     }
 
     public void update(String name, String description) {
@@ -134,14 +113,6 @@ public class Project {
         }
     }
 
-    public void update(User user) {
-        this.supervisor = user;
-    }
-
-    public void addUser(User user) {
-        this.team.add(user);
-    }
-
     public Set<ProjectType> getType() {
         return type;
     }
@@ -152,5 +123,28 @@ public class Project {
 
     public boolean isCreator(User user) {
         return this.getCreator().getId().equals(user.getId());
+    }
+
+    public void addLike(User user) {
+        this.who_liked.add(user);
+    }
+
+    public int like_amount() {
+        return this.who_liked.size();
+    }
+
+    public void addTag(TagProject tag) {
+        this.tags.add(tag);
+    }
+
+    public boolean containsTag(String tag) {
+        boolean flag = false;
+        for (TagProject item : tags) {
+            if (item.getText().equals(tag)) {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
     }
 }

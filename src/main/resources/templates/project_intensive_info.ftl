@@ -7,13 +7,6 @@
         <div class="col-lg-8">
             <h1 id="1"><@p.text "1" "${project.name}"/></h1>
         </div>
-        <div class="col-lg-4">
-            <#if user_now.isModerator() || project.isCreator(user_now)>
-                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                        data-target="#editProjectModal"> Edit
-                </button>
-            </#if>
-        </div>
     </div>
     <hr>
 
@@ -24,21 +17,18 @@
 
     <div class="row">
         <div class="col-lg-9">
-            <i class="text-muted">Who liked:</i> <#list project.who_liked as user>
-                <a id="${user.id}list0"><@p.text "${user.id}list0" "${user.username}"/></a><#sep>, <#else> ... </#list>
-        </div>
-        <div class="col-lg-9">
-            <i class="text-muted">Tags:</i>
-            <#list project.tags as tag>
-                #${tag.text}
-                <#sep>; <#else> No tags
-            </#list>
+            <!-- Team -->
+            <i class="text-muted">Team:</i> <#list team.participants as user>
+                <a id="${user.id}list1"><@p.text "${user.id}list1" "${user.username}"/></a><#sep>, <#else> ... </#list>
         </div>
         <div class="col-lg-3 list-group list-group-flush">
             <span class="list-group-item"><i class="text-muted">Created:</i>
                 <a id="3"><@p.text "3" "${project.date_created}"/></a><br></span>
             <span class="list-group-item"><i class="text-muted">Creator:</i>
                 <a id="4"><@p.text "4" "${project.creator.username}"/></a><br></span>
+            <span class="list-group-item"><i class="text-muted">Supervisor:</i>
+                <#if team.supervisor??><a id="5">
+                    <@p.text "5" "${team.supervisor.username}"/></a><#else>...</#if></span>
             <#if user_now.isCurator()>
                 <#list project.type as t>
                     <span class="list-group-item"><i class="text-muted">Type:</i> ${t}<br></span>
@@ -51,76 +41,58 @@
     <!-- Control zone -->
     <#if user_now.isCurator()>
         <div class="form-row my-3">
+            <#if !team.supervisor??>
+                <div class="col">
+                    <button type="button" class="btn btn-primary"
+                            data-toggle="modal" data-target="#addSupervisorModal">Add supervisor
+                    </button>
+                </div>
+            </#if>
             <div class="col">
                 <button type="button" class="btn btn-primary"
-                        data-toggle="modal" data-target="#changeType">Change type
-                </button>
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-primary"
-                        data-toggle="modal" data-target="#deleteProject">Delete
-                </button>
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-primary"
-                        data-toggle="modal" data-target="#addTag">Add tag
+                        data-toggle="modal" data-target="#addUserModal">Add user
                 </button>
             </div>
         </div>
     </#if>
 
     <!-- Modals -->
-    <@m.modal "changeType" "type" "Change" "Change type of this project">
+    <@m.modal "addUserModal" "user" "Add" "Add User">
+        <#if isEmptyTeam>
+            <p>No new participants available</p>
+        </#if>
         <div class="input-group mb3">
-            <form method="post" action="/project/${project.id}/type" id="type" class="form-inline">
+            <form method="post" action="/intensive/${intensive.id}/project/${project.id}/add" id="user"
+                  class="form-inline">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="selectType">Types</label>
+                    <label class="input-group-text" for="selectUser">Users</label>
                 </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <select id="selectType" name="type" class="custom-select">
+                <select id="selectUser" name="username" class="custom-select">
                     <option selected>Choose...</option>
-                    <#list types as type>
-                        <option>${type}</option>
+                    <#list available_users as user>
+                        <option id="${user.id}list1"><@p.text "${user.id}list1" "${user.username}"/></option>
                     </#list>
                 </select>
             </form>
         </div>
     </@m.modal>
 
-    <@m.modal "deleteProject" "delete" "Confirm" "Are you sure?">
+    <@m.modal "addSupervisorModal" "supervisor" "Add" "Add supervisor">
+        <#if isEmptySupervisor>
+            <p>No curators available</p>
+        </#if>
         <div class="input-group mb3">
-            <form method="post" action="/project/${project.id}/delete" id="delete" class="form-inline">
-                <p>This project will be absolutely destroyed...</p>
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            </form>
-        </div>
-    </@m.modal>
-
-    <@m.modal "editProjectModal" "project" "Update" "Edit project information">
-        <form method="post" action="/project/${project.id}/edit" id="project">
-            <div class="form-group">
-                <label for="name" class="col-form-label">Name of project:</label>
-                <input type="text" class="form-control" name="name">
-            </div>
-            <div class="form-group">
-                <label for="description" class="col-form-label">Description:</label>
-                <textarea class="form-control" name="description"></textarea>
-            </div>
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        </form>
-    </@m.modal>
-
-    <@m.modal "addTag" "tag" "Add" "Add tag to this project">
-        <div class="input-group mb3">
-            <form method="post" action="/project/${project.id}/tag" id="tag" class="form-inline">
+            <form method="post" action="/intensive/${intensive.id}/project/${project.id}/supervisor" id="supervisor"
+                  class="form-inline">
                 <div class="input-group-prepend">
-                    <label class="input-group-text" for="selectType">Tags</label>
+                    <label class="input-group-text" for="selectSupervisor">Users</label>
                 </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <select id="selectType" name="tag" class="custom-select">
+                <select id="selectSupervisor" name="supervisor" class="custom-select">
                     <option selected>Choose...</option>
-                    <#list tags as tag>
-                        <option>${tag.text}</option>
+                    <#list supervisors as user>
+                        <option id="${user.id}list2"><@p.text "${user.id}list2" "${user.username}"/></option>
                     </#list>
                 </select>
             </form>
@@ -128,7 +100,7 @@
     </@m.modal>
 
     <!-- Send comment -->
-    <form method="post" action="/project/${project.id}/comment" class="row">
+    <form method="post" action="/intensive/${intensive.id}/project/${project.id}/comment" class="row">
         <div class="col-lg-10">
             <input type="text" name="text" placeholder="Your message" class="form-control my-2"/>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>

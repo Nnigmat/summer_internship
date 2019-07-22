@@ -11,7 +11,10 @@
         <div class="col-lg-4">
             <div class="row">
                 <div class="col-lg-8">
-                    <span class="text-muted">Username: </span>${user_now.username}<br>
+                    <span class="text-muted">Username: </span><a id="1"><@p.text "1" "${user_now.username}"/></a><br>
+                    <span class="text-muted">Password: </span><a id="2"><@p.text "2" "${user_now.password}"/></a><br>
+                    <span class="text-muted">Name: </span><a id="3"><@p.text "3" "${user_now.name}"/></a><br>
+                    <span class="text-muted">Surname: </span><a id="4"><@p.text "4" "${user_now.surname}"/></a><br>
                     <span class="text-muted">Role: </span>
                     <#list user_now.getAuthorities() as role>
                         ${role}
@@ -34,6 +37,14 @@
                     <label for="password" class="col-form-label">Password:</label>
                     <input class="form-control" name="password" type="password">
                 </div>
+                <div class="form-group">
+                    <label for="name" class="col-form-label">Name:</label>
+                    <input class="form-control" name="name" type="text">
+                </div>
+                <div class="form-group">
+                    <label for="surname" class="col-form-label">Surname:</label>
+                    <input class="form-control" name="surname" type="text">
+                </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
             </form>
         </@m.modal>
@@ -42,68 +53,91 @@
             <div class="row">
 
                 <!-- Projects user created -->
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <div class="list-group list-group-flush shadow">
                        <span class="list-group-item active">Suggested projects</span>
-                        <#list user_now.getCreatedProjects() as project>
-                            <a href="/project/${project.id}" class="list-group-item list-group-item-action">
-                                ${project.name}
+                        <#list user_now.createdProjects as project>
+                            <a href="/project/${project.id}" class="list-group-item list-group-item-action"
+                               id="${project.id}list1">
+                                <@p.text "${project.id}list1" "${project.name}"/>
+                            </a>
+                        </#list>
+                    </div>
+                </div>
+
+                <!-- Projects user liked -->
+                <div class="col-lg-4">
+                    <div class="list-group list-group-flush shadow">
+                        <span class="list-group-item active">Liked projects</span>
+                        <#list user_now.liked_projects as project>
+                            <a href="/project/${project.id}" class="list-group-item list-group-item-action"
+                               id="${project.id}list0">
+                                <@p.text "${project.id}list0" "${project.name}"/>
                             </a>
                         </#list>
                     </div>
                 </div>
 
                 <!-- Projects user is a part of a team -->
-                <div class="col-lg-6">
-                    <div class="list-group list-group-flush shadow">
-                        <li class="list-group-item list-group-item-action active">Participated in projects</li>
-                        <#list user_now.getProject_list() as project>
-                            <a href="/project/${project.id}" class="list-group-item list-group-item-action">
-                                ${project.name}
-                            </a>
-                        </#list>
+                <#if user_now.isCurator() || user_now.isUser()>
+                    <div class="col-lg-4">
+                        <div class="list-group list-group-flush shadow">
+                            <#if !user_now.isCurator()>
+                                <li class="list-group-item list-group-item-action active">Participated in projects</li>
+                            <#else>
+                                <li class="list-group-item list-group-item-action active">Curator of projects</li>
+                            </#if>
+                            <#list projects as project>
+                                <a href="/intensive/${project.intensive.id}/project/${project.project.id}"
+                                   class="list-group-item list-group-item-action" id="${project.id}list2">
+                                    <@p.text "${project.id}list2" "${project.intensive.name}: ${project.project.name}"/>
+                                </a>
+                            </#list>
+                        </div>
                     </div>
-                </div>
+                </#if>
             </div>
         </div>
     </div>
 
+    <div class="my-4">
+        <form method="post" action="/profile/upload" id="profile" enctype="multipart/form-data">
+            <input name="file" type="file">
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <button class="btn btn-primary" type="submit">Upload</button>
+        </form>
+    </div>
+    <div>
+        <#if user_now.avatar??>
+            <div style="overflow: hidden; max-height: 500px; max-width: 500px">
+                <img src="/image/${user_now.avatar}">
+            </div>
+        </#if>
+    </div>
+    <div>
+        <#list user_now.tags as tag>
+            #${tag.text}
+            <#sep>; <#else> No tags
+        </#list>
+    </div>
+    <button type="button" class="btn btn-primary"
+            data-toggle="modal" data-target="#addTag">Add tag
+    </button>
 
-<#--    <form action="/profile" method="post">-->
-<#--        <!-- Username field &ndash;&gt;-->
-<#--        <div class="form-group">-->
-<#--            <label for="username">-->
-<#--                Current username: ${user_now.username}-->
-<#--            </label>-->
-<#--            <input type="text" name="username" class="form-control" placeholder="Enter username"/>-->
-<#--        </div>-->
-
-<#--        <!-- Password field &ndash;&gt;-->
-<#--        <div class="form-group">-->
-<#--            <label for="password">-->
-<#--                Current password: ${user_now.password}-->
-<#--            </label>-->
-<#--            <input type="text" name="password" class="form-control" placeholder="Enter password"/>-->
-<#--        </div>-->
-
-<#--        <!-- Button field &ndash;&gt;-->
-<#--        <div>-->
-<#--            <input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
-<#--            <button type="submit" class="btn btn-primary my-2">Edit profile</button>-->
-<#--        </div>-->
-<#--    </form>-->
-
-<#--    <!-- Authority field &ndash;&gt;-->
-<#--    <h4>Authorities:</h4>-->
-<#--    <#list user_now.roles as role>-->
-<#--        <p>${role}</p>-->
-<#--    </#list>-->
-
-<#--    <!-- Projects field &ndash;&gt;-->
-<#--    <h4>Projects:</h4>-->
-<#--    <#list user_now.project_list as project>-->
-<#--        <div>${project.name}</div>-->
-<#--    <#else>-->
-<#--        No projects-->
-<#--    </#list>-->
+    <@m.modal "addTag" "tag" "Add" "Add tag to this project">
+        <div class="input-group mb3">
+            <form method="post" action="/profile/tag" id="tag" class="form-inline">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="selectType">Tags</label>
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <select id="selectType" name="tag" class="custom-select">
+                    <option selected>Choose...</option>
+                    <#list tags as tag>
+                        <option>${tag.text}</option>
+                    </#list>
+                </select>
+            </form>
+        </div>
+    </@m.modal>
 </@p.page>

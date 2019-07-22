@@ -17,10 +17,17 @@
                 <constraints nullable="false"></constraints>
             </column>
             <column name="active" type="bool" defaultValue="true"></column>
+            <column name="name" type="varchar(128)" defaultValue="?">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="surname" type="varchar(128)" defaultValue="?">
+                <constraints nullable="false"></constraints>
+            </column>
+            <column name="avatar" type="varchar(128)">
+                <constraints nullable="true"></constraints>
+            </column>
         </createTable>
-    </changeSet>
 
-    <changeSet id="2" author="nnigmat">
         <insert tableName="usr">
             <column name="id" value="-3"></column>
             <column name="username" value="sasha"></column>
@@ -41,9 +48,12 @@
             <column name="username" value="admin"></column>
             <column name="password" value="admin"></column>
         </insert>
-    </changeSet>
+        <insert tableName="usr">
+            <column name="id" value="-4"></column>
+            <column name="username" value="ban"></column>
+            <column name="password" value="ban"></column>
+        </insert>
 
-    <changeSet id="3" author="nnigmat">
         <createTable tableName="user_roles">
             <column name="user_id" type="bigint">
                 <constraints nullable="false" foreignKeyName="fk_user_role" references="usr(id)"></constraints>
@@ -68,6 +78,10 @@
         <insert tableName="user_roles">
             <column name="roles" value="ADMIN"></column>
             <column name="user_id" value="0"></column>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="roles" value="BAN"></column>
+            <column name="user_id" value="-4"></column>
         </insert>
     </changeSet>
 
